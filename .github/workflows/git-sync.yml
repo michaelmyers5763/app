@@ -10,6 +10,7 @@ on:
 
 jobs:
   git-sync:
+    if: ${{ secrets.SSH_PRIVATE_KEY != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: git-sync
