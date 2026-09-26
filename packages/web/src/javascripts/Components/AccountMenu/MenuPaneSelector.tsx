@@ -1,11 +1,9 @@
 import { WebApplicationGroup } from '@/Application/WebApplicationGroup'
 import { observer } from 'mobx-react-lite'
-import { FunctionComponent, useState } from 'react'
+import { FunctionComponent } from 'react'
 import { AccountMenuPane } from './AccountMenuPane'
 import ConfirmPassword from './ConfirmPassword'
-import CreateAccount from './CreateAccount'
 import GeneralAccountMenu from './GeneralAccountMenu'
-import SignInPane from './SignIn'
 
 type Props = {
   mainApplicationGroup: WebApplicationGroup
@@ -15,9 +13,6 @@ type Props = {
 }
 
 const MenuPaneSelector: FunctionComponent<Props> = ({ menuPane, setMenuPane, closeMenu, mainApplicationGroup }) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
   switch (menuPane) {
     case AccountMenuPane.GeneralMenu:
       return (
@@ -37,7 +32,7 @@ const MenuPaneSelector: FunctionComponent<Props> = ({ menuPane, setMenuPane, clo
         />
       )
     case AccountMenuPane.ConfirmPassword:
-      return <ConfirmPassword setMenuPane={setMenuPane} email={email} password={password} />
+      return <ConfirmPassword setMenuPane={setMenuPane} email="" password="" />
   }
 }
 

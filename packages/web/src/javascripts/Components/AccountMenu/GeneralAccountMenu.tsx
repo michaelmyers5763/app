@@ -26,7 +26,7 @@ type Props = {
 
 const iconClassName = `text-neutral mr-2 ${MenuItemIconSize}`
 
-const GeneralAccountMenu: FunctionComponent<Props> = ({ setMenuPane, closeMenu, mainApplicationGroup }) => {
+const GeneralAccountMenu: FunctionComponent<Props> = ({ closeMenu, mainApplicationGroup }) => {
   const application = useApplication()
 
   const [isSyncingInProgress, setIsSyncingInProgress] = useState(false)
@@ -82,14 +82,6 @@ const GeneralAccountMenu: FunctionComponent<Props> = ({ setMenuPane, closeMenu, 
   const signOut = useCallback(() => {
     application.accountMenuController.setSigningOut(true)
   }, [application])
-
-  const activateRegisterPane = useCallback(() => {
-    setMenuPane(AccountMenuPane.Register)
-  }, [setMenuPane])
-
-  const activateSignInPane = useCallback(() => {
-    setMenuPane(AccountMenuPane.SignIn)
-  }, [setMenuPane])
 
   const CREATE_ACCOUNT_INDEX = 1
   const SWITCHER_INDEX = 0
