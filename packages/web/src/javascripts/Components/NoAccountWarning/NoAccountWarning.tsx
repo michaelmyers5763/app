@@ -1,14 +1,11 @@
-import { AccountMenuController } from '@/Controllers/AccountMenu/AccountMenuController'
-import { NoAccountWarningController } from '@/Controllers/NoAccountWarningController'
 import { observer } from 'mobx-react-lite'
-import NoAccountWarningContent from './NoAccountWarningContent'
 
 type Props = {
-  accountMenuController: AccountMenuController
-  noAccountWarningController: NoAccountWarningController
+  accountMenuController?: unknown
+  noAccountWarningController?: unknown
 }
 
-const NoAccountWarning = ({ accountMenuController, noAccountWarningController }: Props) => {
+const NoAccountWarning = (_props: Props) => {
   return null
 }
 

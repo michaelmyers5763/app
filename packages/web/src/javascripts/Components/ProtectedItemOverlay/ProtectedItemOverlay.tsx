@@ -5,19 +5,16 @@ import MobileItemsListButton from '../NoteGroupView/MobileItemsListButton'
 const jtString = (value: unknown): string => (Array.isArray(value) ? value.join('') : String(value))
 
 type Props = {
-  showAccountMenu: () => void
+  showAccountMenu?: () => void
   onViewItem: () => void
   hasProtectionSources: boolean
   itemType: 'note' | 'file'
 }
 
-const ProtectedItemOverlay = ({ showAccountMenu, onViewItem, hasProtectionSources, itemType }: Props) => {
+const ProtectedItemOverlay = ({ onViewItem, hasProtectionSources, itemType }: Props) => {
   const instructionText = hasProtectionSources
     ? jtString(c('B2.NavSharedUI.Info').jt`Authenticate to view this ${itemType}.`)
-    : jtString(
-        c('B2.NavSharedUI.Info')
-          .jt`Add a passcode to require authentication to view this ${itemType}.`,
-      )
+    : jtString(c('B2.NavSharedUI.Info').jt`Add a passcode to require authentication to view this ${itemType}.`)
 
   return (
     <div aria-label={c('B2.NavSharedUI.Label').t`Protected overlay`} className="section editor sn-component p-5">
