@@ -1,5 +1,4 @@
 import { WebApplication } from '@/Application/WebApplication'
-import { usePremiumModal } from '@/Hooks/usePremiumModal'
 import { classNames } from '@standardnotes/utils'
 import { isHandlingFileDrag } from '@/Utils/DragTypeCheck'
 import { StreamingFileReader } from '@standardnotes/filepicker'
@@ -7,7 +6,6 @@ import { FileItem, SNNote } from '@standardnotes/snjs'
 import { useMemo, useState, createContext, ReactNode, useRef, useCallback, useEffect, useContext, memo } from 'react'
 import Portal from './Portal/Portal'
 import { ElementIds } from '@/Constants/ElementIDs'
-import { FeatureName, getFeatureNameLabel } from '@/Controllers/FeatureName'
 import { c } from 'ttag'
 
 type FileDragTargetCommonData = {
@@ -57,7 +55,6 @@ const MemoizedChildren = memo(({ children }: { children: ReactNode }) => {
 })
 
 const FileDragNDropProvider = ({ application, children }: Props) => {
-  const premiumModal = usePremiumModal()
   const [isDraggingFiles, setIsDraggingFiles] = useState(false)
   const [tooltipText, setTooltipText] = useState('')
 
@@ -198,11 +195,6 @@ const FileDragNDropProvider = ({ application, children }: Props) => {
 
       resetState()
 
-      if (!application.featuresController.entitledToFiles) {
-        premiumModal.activate(getFeatureNameLabel(FeatureName.Files))
-        return
-      }
-
       if (event.dataTransfer?.items.length) {
         Array.from(event.dataTransfer.items).forEach(async (item) => {
           const fileOrHandle = StreamingFileReader.available()
@@ -236,7 +228,7 @@ const FileDragNDropProvider = ({ application, children }: Props) => {
         dragCounter.current = 0
       }
     },
-    [application, premiumModal, resetState],
+    [application, resetState],
   )
 
   useEffect(() => {
