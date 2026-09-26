@@ -202,13 +202,7 @@ export class FileService extends AbstractService implements FilesClientInterface
       decryptedSize: sizeInBytes,
     }
 
-    const uploadOperation = new EncryptAndUploadFileOperation(
-      fileParams,
-      valetToken,
-      this.crypto,
-      this.api,
-      vault,
-    )
+    const uploadOperation = new EncryptAndUploadFileOperation(fileParams, valetToken, this.crypto, this.api, vault)
 
     return uploadOperation
   }
