@@ -39,17 +39,8 @@ const Authentication: FunctionComponent<Props> = ({ application }) => {
           <AccountIllustration className="mb-3" />
           <Title>{c('B6.Preferences.Account.Title').t`You're not signed in`}</Title>
           <div className="mb-3 text-center text-base lg:text-sm">
-            {c('B6.Preferences.Account.Info')
-              .t`Sign in to sync your notes and preferences across all your devices and enable end-to-end encryption.`}
+            {c('B6.Preferences.Account.Info').t`Offline mode enabled.`}
           </div>
-          <Button
-            primary
-            label={c('B6.Preferences.Account.Action').t`Create free account`}
-            onClick={clickRegister}
-            className="mb-3"
-          />
-          <div className="text-base lg:text-sm">{c('B6.Preferences.Account.Info')
-            .jt`Already have an account? ${loginLink}`}</div>
         </div>
       </PreferencesSegment>
     </PreferencesGroup>

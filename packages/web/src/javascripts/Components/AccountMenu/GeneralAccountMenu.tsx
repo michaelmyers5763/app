@@ -159,22 +159,11 @@ const GeneralAccountMenu: FunctionComponent<Props> = ({ setMenuPane, closeMenu, 
           <WorkspaceSwitcherOption mainApplicationGroup={mainApplicationGroup} />
         </MenuSection>
         <MenuSection>
-          {user ? (
+          {user && (
             <MenuItem onClick={openPreferences}>
               <Icon type="user" className={iconClassName} />
               {c('B1.Account.Session.Action').t`Account settings`}
             </MenuItem>
-          ) : (
-            <>
-              <MenuItem onClick={activateRegisterPane}>
-                <Icon type="user" className={iconClassName} />
-                {c('B1.Account.Session.Action').t`Create free account`}
-              </MenuItem>
-              <MenuItem onClick={activateSignInPane}>
-                <Icon type="signIn" className={iconClassName} />
-                {c('B1.Account.Session.Action').t`Sign in`}
-              </MenuItem>
-            </>
           )}
           <MenuItem
             onClick={() => {
