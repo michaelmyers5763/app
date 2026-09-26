@@ -299,6 +299,11 @@ export class FileService extends AbstractService implements FilesClientInterface
 
     const insertedItem = await this.mutator.insertItem<FileItem>(fileItem)
 
+    const aggregateEncrypted = operation.getAggregateEncryptedBytes()
+    if (aggregateEncrypted && aggregateEncrypted.length > 0) {
+      this.encryptedCache.add(uuid, { encryptedBytes: aggregateEncrypted })
+    }
+
     await this.sync.sync()
 
     return insertedItem

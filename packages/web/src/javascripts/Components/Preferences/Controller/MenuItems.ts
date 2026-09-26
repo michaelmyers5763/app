@@ -4,7 +4,6 @@ import { PreferencesMenuItem } from './PreferencesMenuItem'
 
 export const PREFERENCES_MENU_ITEMS: PreferencesMenuItem[] = [
   { id: 'whats-new', label: c('B6.Preferences.Other.Label').t`What's New`, icon: 'asterisk', order: 0 },
-  { id: 'account', label: c('B6.Preferences.Other.Label').t`Account`, icon: 'user', order: 1 },
   { id: 'general', label: c('B6.Preferences.Other.Label').t`General`, icon: 'settings', order: 3 },
   { id: 'security', label: c('B6.Preferences.Other.Label').t`Security`, icon: 'security', order: 4 },
   { id: 'backups', label: c('B6.Preferences.Other.Action').t`Backups`, icon: 'restore', order: 5 },
@@ -19,7 +18,6 @@ export const PREFERENCES_MENU_ITEMS: PreferencesMenuItem[] = [
 
 export const READY_PREFERENCES_MENU_ITEMS: PreferencesMenuItem[] = [
   { id: 'whats-new', label: c('B6.Preferences.Other.Label').t`What's New`, icon: 'asterisk', order: 0 },
-  { id: 'account', label: c('B6.Preferences.Other.Label').t`Account`, icon: 'user', order: 1 },
   { id: 'general', label: c('B6.Preferences.Other.Label').t`General`, icon: 'settings', order: 3 },
   { id: 'security', label: c('B6.Preferences.Other.Label').t`Security`, icon: 'security', order: 4 },
   { id: 'backups', label: c('B6.Preferences.Other.Action').t`Backups`, icon: 'restore', order: 5 },

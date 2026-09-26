@@ -15,6 +15,11 @@ export class EncryptAndUploadFileOperation {
 
   private totalBytesPushedInDecryptedTerms = 0
   private totalBytesUploadedInDecryptedTerms = 0
+  private aggregateEncryptedBytes = new Uint8Array()
+
+  public getAggregateEncryptedBytes(): Uint8Array {
+    return this.aggregateEncryptedBytes
+  }
 
   constructor(
     private file: {
@@ -63,6 +68,11 @@ export class EncryptAndUploadFileOperation {
     const encryptedBytes = this.encryptBytes(decryptedBytes, isFinalChunk)
 
     this.encryptedChunkSizes.push(encryptedBytes.length)
+
+    const combined = new Uint8Array(this.aggregateEncryptedBytes.length + encryptedBytes.length)
+    combined.set(this.aggregateEncryptedBytes, 0)
+    combined.set(encryptedBytes, this.aggregateEncryptedBytes.length)
+    this.aggregateEncryptedBytes = combined
 
     const uploadSuccess = await this.uploadBytes(encryptedBytes, chunkId)
 
