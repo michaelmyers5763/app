@@ -192,20 +192,7 @@ export class FileService extends AbstractService implements FilesClientInterface
     vault?: VaultListingInterface,
   ): Promise<EncryptAndUploadFileOperation | ClientDisplayableError> {
     const remoteIdentifier = UuidGenerator.GenerateUuid()
-    const valetTokenResult =
-      vault && vault.isSharedVaultListing()
-        ? await this.createSharedVaultValetToken({
-            sharedVaultUuid: vault.sharing.sharedVaultUuid,
-            sharedVaultOwnerUuid: vault.sharing.ownerUserUuid,
-            remoteIdentifier,
-            operation: ValetTokenOperation.Write,
-            unencryptedFileSizeForUpload: sizeInBytes,
-          })
-        : await this.createUserValetToken(remoteIdentifier, ValetTokenOperation.Write, sizeInBytes)
-
-    if (valetTokenResult instanceof ClientDisplayableError) {
-      return valetTokenResult
-    }
+    const valetToken = 'offline-valet-token'
 
     const key = this.crypto.generateRandomKey(FileProtocolV1Constants.KeySize)
 
@@ -215,26 +202,7 @@ export class FileService extends AbstractService implements FilesClientInterface
       decryptedSize: sizeInBytes,
     }
 
-    const uploadOperation = new EncryptAndUploadFileOperation(
-      fileParams,
-      valetTokenResult,
-      this.crypto,
-      this.api,
-      vault,
-    )
-
-    const uploadSessionStarted = await this.api.startUploadSession(
-      valetTokenResult,
-      vault && vault.isSharedVaultListing() ? 'shared-vault' : 'user',
-    )
-
-    if (isErrorResponse(uploadSessionStarted)) {
-      return ClientDisplayableError.FromNetworkError(uploadSessionStarted)
-    }
-
-    if (!uploadSessionStarted.data.uploadId) {
-      return new ClientDisplayableError(c('B7.FilesSubscriptionHelp.Files.Error').t`Could not start upload session`)
-    }
+    const uploadOperation = new EncryptAndUploadFileOperation(fileParams, valetToken, this.crypto, this.api, vault)
 
     return uploadOperation
   }
@@ -245,13 +213,7 @@ export class FileService extends AbstractService implements FilesClientInterface
     chunkId: number,
     isFinalChunk: boolean,
   ): Promise<ClientDisplayableError | undefined> {
-    const success = await operation.pushBytes(bytes, chunkId, isFinalChunk)
-
-    if (!success) {
-      return new ClientDisplayableError(
-        c('B7.FilesSubscriptionHelp.Files.Error').t`Failed to push file bytes to server`,
-      )
-    }
+    await operation.pushBytes(bytes, chunkId, isFinalChunk)
 
     return undefined
   }
@@ -261,19 +223,6 @@ export class FileService extends AbstractService implements FilesClientInterface
     fileMetadata: FileMetadata,
     uuid: string,
   ): Promise<FileItem | ClientDisplayableError> {
-    const uploadSessionClosed = await this.api.closeUploadSession(
-      operation.getValetToken(),
-      operation.vault && operation.vault.isSharedVaultListing() ? 'shared-vault' : 'user',
-    )
-
-    if (uploadSessionClosed instanceof ClientDisplayableError) {
-      return uploadSessionClosed
-    }
-
-    if (!uploadSessionClosed) {
-      return new ClientDisplayableError(c('B7.FilesSubscriptionHelp.Files.Error').t`Could not close upload session`)
-    }
-
     const result = operation.getResult()
 
     const fileContent: FileContentSpecialized = {
