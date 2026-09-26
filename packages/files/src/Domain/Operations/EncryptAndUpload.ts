@@ -1,6 +1,5 @@
 import { FileUploadProgress } from '../Types/FileUploadProgress'
 import { FileUploadResult } from '../Types/FileUploadResult'
-import { FileUploader } from '../UseCase/FileUploader'
 import { PureCryptoInterface } from '@standardnotes/sncrypto-common'
 import { FileEncryptor } from '../UseCase/FileEncryptor'
 import { FileContent, VaultListingInterface } from '@standardnotes/models'
@@ -10,7 +9,6 @@ export class EncryptAndUploadFileOperation {
   public readonly encryptedChunkSizes: number[] = []
 
   private readonly encryptor: FileEncryptor
-  private readonly uploader: FileUploader
   private readonly encryptionHeader: string
 
   private totalBytesPushedInDecryptedTerms = 0
@@ -29,11 +27,10 @@ export class EncryptAndUploadFileOperation {
     },
     private valetToken: string,
     private crypto: PureCryptoInterface,
-    private api: FilesApiInterface,
+    _api: FilesApiInterface,
     public readonly vault?: VaultListingInterface,
   ) {
     this.encryptor = new FileEncryptor(file, this.crypto)
-    this.uploader = new FileUploader(this.api)
 
     this.encryptionHeader = this.encryptor.initializeHeader()
   }
@@ -62,7 +59,7 @@ export class EncryptAndUploadFileOperation {
     }
   }
 
-  public async pushBytes(decryptedBytes: Uint8Array, chunkId: number, isFinalChunk: boolean): Promise<boolean> {
+  public async pushBytes(decryptedBytes: Uint8Array, _chunkId: number, isFinalChunk: boolean): Promise<boolean> {
     this.totalBytesPushedInDecryptedTerms += decryptedBytes.byteLength
 
     const encryptedBytes = this.encryptBytes(decryptedBytes, isFinalChunk)
@@ -74,29 +71,14 @@ export class EncryptAndUploadFileOperation {
     combined.set(encryptedBytes, this.aggregateEncryptedBytes.length)
     this.aggregateEncryptedBytes = combined
 
-    const uploadSuccess = await this.uploadBytes(encryptedBytes, chunkId)
+    this.totalBytesUploadedInDecryptedTerms += decryptedBytes.byteLength
 
-    if (uploadSuccess) {
-      this.totalBytesUploadedInDecryptedTerms += decryptedBytes.byteLength
-    }
-
-    return uploadSuccess
+    return true
   }
 
   private encryptBytes(decryptedBytes: Uint8Array, isFinalChunk: boolean): Uint8Array {
     const encryptedBytes = this.encryptor.pushBytes(decryptedBytes, isFinalChunk)
 
     return encryptedBytes
-  }
-
-  private async uploadBytes(encryptedBytes: Uint8Array, chunkId: number): Promise<boolean> {
-    const success = await this.uploader.uploadBytes(
-      encryptedBytes,
-      this.vault && this.vault.sharing ? 'shared-vault' : 'user',
-      chunkId,
-      this.valetToken,
-    )
-
-    return success
   }
 }
