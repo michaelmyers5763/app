@@ -365,17 +365,6 @@ class Footer extends AbstractComponent<Props, State> {
           className="z-footer-bar hidden h-8 w-full select-none items-center justify-between border-t border-border bg-contrast px-3 text-text md:flex"
         >
           <div className="left flex h-full flex-shrink-0">
-            <div className="sk-app-bar-item relative z-footer-bar-item ml-0 select-none">
-              <AccountMenuButton
-                hasError={this.state.hasError}
-                controller={this.application.accountMenuController}
-                mainApplicationGroup={this.props.applicationGroup}
-                onClickOutside={this.clickOutsideAccountMenu}
-                toggleMenu={this.accountMenuClickHandler}
-                user={this.user}
-              />
-            </div>
-
             <div className="relative z-footer-bar-item select-none">
               <PreferencesButton openPreferences={this.openPreferences} />
             </div>
@@ -387,11 +376,6 @@ class Footer extends AbstractComponent<Props, State> {
             <div className="relative z-footer-bar-item  ml-1.5 select-none">
               <VaultSelectionButton />
             </div>
-            <UpgradeNow
-              application={this.application}
-              featuresController={this.application.featuresController}
-              subscriptionContoller={this.application.subscriptionController}
-            />
             {this.state.showBetaWarning && (
               <Fragment>
                 <div className="relative z-footer-bar-item ml-3 flex select-none items-center border-l border-solid border-border pl-3">

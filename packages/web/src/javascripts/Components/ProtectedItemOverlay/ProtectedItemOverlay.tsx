@@ -16,7 +16,7 @@ const ProtectedItemOverlay = ({ showAccountMenu, onViewItem, hasProtectionSource
     ? jtString(c('B2.NavSharedUI.Info').jt`Authenticate to view this ${itemType}.`)
     : jtString(
         c('B2.NavSharedUI.Info')
-          .jt`Add a passcode or create an account to require authentication to view this ${itemType}.`,
+          .jt`Add a passcode to require authentication to view this ${itemType}.`,
       )
 
   return (
@@ -31,17 +31,6 @@ const ProtectedItemOverlay = ({ showAccountMenu, onViewItem, hasProtectionSource
           </h1>
           <p className="mt-2 w-full text-lg">{instructionText}</p>
           <div className="mt-4 flex gap-3">
-            {!hasProtectionSources && (
-              <Button
-                primary
-                small
-                onClick={() => {
-                  showAccountMenu()
-                }}
-              >
-                {c('B2.NavSharedUI.Action').t`Open account menu`}
-              </Button>
-            )}
             <Button small onClick={onViewItem}>
               {hasProtectionSources
                 ? c('B2.NavSharedUI.Action').t`Authenticate`

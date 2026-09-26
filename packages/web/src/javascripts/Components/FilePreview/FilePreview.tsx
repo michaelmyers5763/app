@@ -108,14 +108,9 @@ const FilePreview = ({
           {hasProtectionSources
             ? c('B7.FilesSubscriptionHelp.Files.Info').t`Authenticate to view this file.`
             : c('B7.FilesSubscriptionHelp.Files.Info')
-                .t`Add a passcode or create an account to require authentication to view this file.`}
+                .t`Add a passcode to require authentication to view this file.`}
         </p>
         <div className="mt-3 flex gap-3">
-          {!hasProtectionSources && (
-            <Button primary small onClick={() => application.showAccountMenu()}>
-              {c('B7.FilesSubscriptionHelp.Files.Action').t`Open account menu`}
-            </Button>
-          )}
           <Button primary onClick={() => application.protections.authorizeItemAccess(file)}>
             {hasProtectionSources
               ? c('B7.FilesSubscriptionHelp.Files.Info').t`Authenticate`

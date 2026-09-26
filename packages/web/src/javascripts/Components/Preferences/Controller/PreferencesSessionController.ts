@@ -14,7 +14,7 @@ import { PREFERENCES_MENU_ITEMS, READY_PREFERENCES_MENU_ITEMS } from './MenuItem
  * Preferences menu. It is created and destroyed each time the menu is opened and closed.
  */
 export class PreferencesSessionController {
-  private _selectedPane: PreferencePaneId = 'account'
+  private _selectedPane: PreferencePaneId = 'general'
   private _menu: PreferencesMenuItem[]
   private _extensionLatestVersions: PackageProvider = new PackageProvider(new Map())
 
@@ -113,7 +113,7 @@ export class PreferencesSessionController {
       return this.selectedMenuItem.id
     }
 
-    return 'account'
+    return 'general'
   }
 
   selectPane = (key: PreferencePaneId) => {

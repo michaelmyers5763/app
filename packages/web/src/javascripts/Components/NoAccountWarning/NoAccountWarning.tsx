@@ -9,14 +9,7 @@ type Props = {
 }
 
 const NoAccountWarning = ({ accountMenuController, noAccountWarningController }: Props) => {
-  const canShow = noAccountWarningController.show
-
-  return canShow ? (
-    <NoAccountWarningContent
-      accountMenuController={accountMenuController}
-      noAccountWarningController={noAccountWarningController}
-    />
-  ) : null
+  return null
 }
 
 export default observer(NoAccountWarning)

@@ -149,7 +149,7 @@ export function StringLocalEncEnabled(): string {
 
 export function StringEncNotEnabled(): string {
   return c('B1.Account.Session.Info')
-    .t`Encryption is not enabled. Sign in, register, or add a passcode lock to enable encryption.`
+    .t`Encryption is not enabled. Add a passcode lock to enable encryption.`
 }
 
 export function StringImportSuccess(): string {

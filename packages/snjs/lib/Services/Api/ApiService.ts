@@ -728,6 +728,10 @@ export class LegacyApiService
     operation: ValetTokenOperation,
     unencryptedFileSize?: number,
   ): Promise<string | ClientDisplayableError> {
+    if (!this.session) {
+      return 'offline-valet-token'
+    }
+
     const url = joinPaths(this.host, Paths.v1.createUserFileValetToken)
 
     const params: CreateValetTokenPayload = {
@@ -758,6 +762,10 @@ export class LegacyApiService
     valetToken: string,
     ownershipType: FileOwnershipType,
   ): Promise<HttpResponse<StartUploadSessionResponse>> {
+    if (valetToken === 'offline-valet-token' || !this.session) {
+      return { data: { uploadId: 'offline-upload' } } as unknown as HttpResponse<StartUploadSessionResponse>
+    }
+
     const url = joinPaths(
       this.getFilesHost(),
       ownershipType === 'user' ? Paths.v1.startUploadSession : Paths.v1.startSharedVaultUploadSession,
@@ -775,6 +783,10 @@ export class LegacyApiService
     valetToken: string,
     ownershipType: FileOwnershipType,
   ): Promise<HttpResponse<StartUploadSessionResponse>> {
+    if (valetToken === 'offline-valet-token' || !this.session) {
+      return { data: { uploadId: 'offline-delete' } } as unknown as HttpResponse<StartUploadSessionResponse>
+    }
+
     const url = joinPaths(
       this.getFilesHost(),
       ownershipType === 'user' ? Paths.v1.deleteFile : Paths.v1.deleteSharedVaultFile,
@@ -797,6 +809,11 @@ export class LegacyApiService
     if (chunkId === 0) {
       throw Error('chunkId must start with 1')
     }
+
+    if (valetToken === 'offline-valet-token' || !this.session) {
+      return true
+    }
+
     const url = joinPaths(
       this.getFilesHost(),
       ownershipType === 'user' ? Paths.v1.uploadFileChunk : Paths.v1.uploadSharedVaultFileChunk,
@@ -825,6 +842,10 @@ export class LegacyApiService
     valetToken: string,
     ownershipType: FileOwnershipType,
   ): Promise<boolean | ClientDisplayableError> {
+    if (valetToken === 'offline-valet-token' || !this.session) {
+      return true
+    }
+
     const url = joinPaths(
       this.getFilesHost(),
       ownershipType === 'user' ? Paths.v1.closeUploadSession : Paths.v1.closeSharedVaultUploadSession,
