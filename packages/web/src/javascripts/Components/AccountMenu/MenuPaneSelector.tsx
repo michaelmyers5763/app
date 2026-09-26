@@ -28,15 +28,12 @@ const MenuPaneSelector: FunctionComponent<Props> = ({ menuPane, setMenuPane, clo
         />
       )
     case AccountMenuPane.SignIn:
-      return <SignInPane setMenuPane={setMenuPane} />
     case AccountMenuPane.Register:
       return (
-        <CreateAccount
+        <GeneralAccountMenu
+          mainApplicationGroup={mainApplicationGroup}
           setMenuPane={setMenuPane}
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
+          closeMenu={closeMenu}
         />
       )
     case AccountMenuPane.ConfirmPassword:

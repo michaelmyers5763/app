@@ -1,7 +1,7 @@
 import { ServerSyncPushContextualPayload } from '@standardnotes/models'
 import { arrayByDifference, nonSecureRandomIdentifier, subtractFromArray } from '@standardnotes/utils'
 import { ServerSyncResponse } from '@Lib/Services/Sync/Account/Response'
-import { ResponseSignalReceiver, SyncSignal } from '@Lib/Services/Sync/Signals'
+import { ResponseSignalReceiver } from '@Lib/Services/Sync/Signals'
 import { LegacyApiService } from '../../Api/ApiService'
 
 export const SyncUpDownLimit = 150
@@ -47,35 +47,16 @@ export class AccountSyncOperation {
   }
 
   async run(): Promise<void> {
-    await this.receiver(SyncSignal.StatusChanged, undefined, {
-      completedUploadCount: this.totalUploadCount - this.pendingUploadCount,
-      totalUploadCount: this.totalUploadCount,
-    })
-    const payloads = this.popPayloads(this.upLimit)
+    // Suppress unused member warnings for offline mode
+    void this.receiver
+    void this.apiService
+    void this.pendingUploadCount
+    void this.totalUploadCount
+    void this.upLimit
+    void this.downLimit
 
-    const rawResponse = await this.apiService.sync(
-      payloads,
-      this.options.syncToken,
-      this.options.paginationToken,
-      this.downLimit,
-      this.options.sharedVaultUuids,
-    )
-
-    const response = new ServerSyncResponse(rawResponse)
-    this.responses.push(response)
-
-    this.options.syncToken = response.lastSyncToken as string
-    this.options.paginationToken = response.paginationToken as string
-
-    try {
-      await this.receiver(SyncSignal.Response, response)
-    } catch (error) {
-      console.error('Sync handle response error', error)
-    }
-
-    if (!this.done) {
-      return this.run()
-    }
+    // Network requests disabled for offline mode.
+    return Promise.resolve()
   }
 
   get done() {
