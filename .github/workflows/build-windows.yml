@@ -1,0 +1,50 @@
+name: Build Windows Desktop
+
+on:
+  push:
+
+jobs:
+  build:
+    name: Build Windows Desktop
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: packages/desktop
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          registry-url: 'https://registry.npmjs.org'
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: yarn install --immutable
+        working-directory: .
+
+      - name: Rebuild Electron Native Modules
+        run: yarn workspace @standardnotes/desktop rebuild:home-server
+        working-directory: .
+
+      - name: Build Desktop Application
+        run: yarn build:desktop
+        working-directory: .
+
+      - name: Get App Version
+        run: echo "APP_VERSION=$(node -p "require('../web/package.json').version")" >> $GITHUB_ENV
+
+      - name: Compile Windows Installer
+        run: yarn run electron-builder --win --x64 --publish=never --c.extraMetadata.version=${{ env.APP_VERSION }}
+
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-windows
+          path: packages/desktop/dist/*.exe
