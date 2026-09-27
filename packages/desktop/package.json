@@ -1,5 +1,6 @@
 {
   "name": "@standardnotes/desktop",
+  "productName": "Unknown Notes",
   "main": "./app/dist/index.js",
   "version": "3.45.1",
   "license": "AGPL-3.0",
@@ -88,6 +89,7 @@
     "webpack-merge": "*"
   },
   "build": {
+    "productName": "Unknown Notes",
     "appId": "org.standardnotes.standardnotes",
     "artifactName": "standard-notes-${version}-${os}-${arch}.${ext}",
     "afterSign": "scripts/notarizeMac.js",
@@ -130,6 +132,8 @@
       "sign": "./scripts/windowsSign.js"
     },
     "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
       "deleteAppDataOnUninstall": true
     },
     "linux": {
