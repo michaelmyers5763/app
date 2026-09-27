@@ -17,7 +17,7 @@ const General: FunctionComponent = () => {
       <Defaults application={application} />
       <NewNoteDefaults />
       <Tools application={application} />
-      <SmartViews application={application} featuresController={application.featuresController} />
+      <SmartViews application={application} />
     </PreferencesPane>
   )
 }

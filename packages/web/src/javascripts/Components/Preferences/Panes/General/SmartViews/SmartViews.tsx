@@ -10,21 +10,17 @@ import AddSmartViewModal from '@/Components/SmartViewBuilder/AddSmartViewModal'
 import { AddSmartViewModalController } from '@/Components/SmartViewBuilder/AddSmartViewModalController'
 import EditSmartViewModal from './EditSmartViewModal'
 import SmartViewItem from './SmartViewItem'
-import { FeaturesController } from '@/Controllers/FeaturesController'
 import { EditSmartViewModalController } from './EditSmartViewModalController'
 import { StringDeleteTag } from '@/Constants/Strings'
 import { confirmDialog } from '@standardnotes/ui-services'
 import ModalOverlay from '@/Components/Modal/ModalOverlay'
 import { c } from 'ttag'
 
-type NewType = {
+type Props = {
   application: WebApplication
-  featuresController: FeaturesController
 }
 
-type Props = NewType
-
-const SmartViews = ({ application, featuresController }: Props) => {
+const SmartViews = ({ application }: Props) => {
   const addSmartViewModalController = useMemo(() => new AddSmartViewModalController(application), [application])
   const editSmartViewModalController = useMemo(() => new EditSmartViewModalController(application), [application])
 
