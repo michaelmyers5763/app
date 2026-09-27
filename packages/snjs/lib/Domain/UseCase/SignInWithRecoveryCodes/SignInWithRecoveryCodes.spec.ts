@@ -10,6 +10,7 @@ import { PureCryptoInterface } from '@standardnotes/sncrypto-common'
 import { AnyKeyParamsContent } from '@standardnotes/common'
 import { DecryptedPayloadInterface, RootKeyContent, RootKeyInterface } from '@standardnotes/models'
 import { SessionBody } from '@standardnotes/responses'
+import { AppName } from '@standardnotes/features'
 
 import { SignInWithRecoveryCodes } from './SignInWithRecoveryCodes'
 
@@ -135,7 +136,7 @@ describe('SignInWithRecoveryCodes', () => {
 
     expect(result.isFailed()).toBe(true)
     expect(result.getError()).toEqual(
-      'This version of the application does not support your newer account type. Please upgrade to the latest version of Standard Notes to sign in.',
+      `This version of the application does not support your newer account type. Please upgrade to the latest version of ${AppName} to sign in.`,
     )
   })
 
