@@ -1,7 +1,6 @@
 import { WebApplication } from '@/Application/WebApplication'
 import { classNames } from '@standardnotes/utils'
 import { isHandlingFileDrag } from '@/Utils/DragTypeCheck'
-import { StreamingFileReader } from '@standardnotes/filepicker'
 import { FileItem, SNNote } from '@standardnotes/snjs'
 import { useMemo, useState, createContext, ReactNode, useRef, useCallback, useEffect, useContext, memo } from 'react'
 import Portal from './Portal/Portal'
