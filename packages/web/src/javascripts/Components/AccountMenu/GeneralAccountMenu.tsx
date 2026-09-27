@@ -63,12 +63,6 @@ const GeneralAccountMenu: FunctionComponent<Props> = ({ closeMenu, mainApplicati
     application.preferencesController.openPreferences()
   }, [application])
 
-  const openHelp = useCallback(() => {
-    application.accountMenuController.closeAccountMenu()
-    application.preferencesController.setCurrentPane('help-feedback')
-    application.preferencesController.openPreferences()
-  }, [application])
-
   const openEmail = useCallback(() => {
     const subject = jtString(c('B1.Account.Session.MailtoSubject').jt`${AppName} Feedback`)
 
@@ -172,11 +166,7 @@ const GeneralAccountMenu: FunctionComponent<Props> = ({ closeMenu, mainApplicati
               {c('B1.Account.Session.Action').t`Email us`}
             </MenuItem>
           )}
-          <MenuItem className="justify-between" onClick={openHelp}>
-            <div className="flex items-center">
-              <Icon type="help" className={iconClassName} />
-              {c('B1.Account.Session.Action').t`Help & feedback`}
-            </div>
+          <MenuItem className="justify-end cursor-default">
             <span className="text-neutral">v{application.version}</span>
           </MenuItem>
           {!isMobilePlatform(application.platform) && (

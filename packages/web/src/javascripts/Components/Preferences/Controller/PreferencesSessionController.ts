@@ -4,7 +4,6 @@ import { WebApplication } from '@/Application/WebApplication'
 import { PackageProvider } from '../Panes/Plugins/PackageProvider'
 import { securityPrefsHasBubble } from '../Panes/Security/securityPrefsHasBubble'
 import { PreferencePaneId, StatusServiceEvent } from '@standardnotes/services'
-import { isDesktopApplication } from '@/Utils'
 import { PreferencesMenuItem } from './PreferencesMenuItem'
 import { SelectableMenuItem } from './SelectableMenuItem'
 import { PREFERENCES_MENU_ITEMS, READY_PREFERENCES_MENU_ITEMS } from './MenuItems'
@@ -28,15 +27,6 @@ export class PreferencesSessionController {
 
     if (application.featuresController.isVaultsEnabled()) {
       menuItems.push({ id: 'vaults', label: c('B6.Preferences.Other.Label').t`Vaults`, icon: 'safe-square', order: 5 })
-    }
-
-    if (isDesktopApplication()) {
-      menuItems.push({
-        id: 'home-server',
-        label: c('B6.Preferences.HomeServer.Label').t`Home Server`,
-        icon: 'server',
-        order: 5,
-      })
     }
 
     this._menu = menuItems.sort((a, b) => a.order - b.order)

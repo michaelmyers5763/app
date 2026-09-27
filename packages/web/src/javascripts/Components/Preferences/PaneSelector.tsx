@@ -6,10 +6,7 @@ import Appearance from './Panes/Appearance'
 import General from './Panes/General/General'
 import AccountPreferences from './Panes/Account/AccountPreferences'
 import Security from './Panes/Security/Security'
-import Listed from './Panes/Listed/Listed'
-import HelpAndFeedback from './Panes/HelpFeedback'
 import { PreferencesProps } from './PreferencesProps'
-import HomeServer from './Panes/HomeServer/HomeServer'
 import Vaults from './Panes/Vaults/Vaults'
 import PluginsPane from './Panes/Plugins/PluginsPane'
 
@@ -24,16 +21,12 @@ const PaneSelector: FunctionComponent<PreferencesProps & { menu: PreferencesSess
       return <AccountPreferences application={application} />
     case 'appearance':
       return <Appearance application={application} />
-    case 'home-server':
-      return <HomeServer />
     case 'security':
       return <Security application={application} />
     case 'vaults':
       return <Vaults />
     case 'backups':
       return <Backups application={application} />
-    case 'listed':
-      return <Listed application={application} />
     case 'shortcuts':
       return null
     case 'plugins':
@@ -42,8 +35,6 @@ const PaneSelector: FunctionComponent<PreferencesProps & { menu: PreferencesSess
       return null
     case 'get-free-month':
       return null
-    case 'help-feedback':
-      return <HelpAndFeedback application={application} />
     default:
       return <General />
   }
