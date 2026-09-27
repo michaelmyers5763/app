@@ -132,11 +132,7 @@ export class FeaturesController extends AbstractViewController implements Intern
   }
 
   private isEntitledToSmartViews(): boolean {
-    const status = this.features.getFeatureStatus(
-      NativeFeatureIdentifier.create(NativeFeatureIdentifier.TYPES.SmartFilters).getValue(),
-    )
-
-    return status === FeatureStatus.Entitled
+    return true
   }
 
   isVaultsEnabled(): boolean {

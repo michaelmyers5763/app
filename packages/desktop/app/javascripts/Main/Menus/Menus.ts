@@ -1,4 +1,3 @@
-import { DiscordUrl, SupportMailtoUrl, WebsiteUrl } from '@standardnotes/features'
 import { AppState } from 'app/AppState'
 import {
   app,
@@ -15,9 +14,7 @@ import { Store } from '../Store/Store'
 import { StoreKeys } from '../Store/StoreKeys'
 import { appMenu as str, contextMenu } from '../Strings'
 import { TrayManager } from '../TrayManager'
-import { autoUpdatingAvailable } from '../Types/Constants'
 import { isLinux, isMac } from '../Types/Platforms'
-import { checkForUpdate, openChangelog, showUpdateInstallationDialog } from '../UpdateManager'
 import { isDev } from '../Utils/Utils'
 import { SpellcheckerManager } from './../SpellcheckerManager'
 import { MenuManagerInterface } from './MenuManagerInterface'
@@ -109,7 +106,7 @@ function suggestionsMenu(
 
 export function createMenuManager({
   window,
-  appState,
+  appState: _appState,
   trayManager,
   store,
   spellcheckerManager,
@@ -128,7 +125,6 @@ export function createMenuManager({
       editMenu(spellcheckerManager, reload),
       viewMenu(window, store, reload),
       windowMenu(store, trayManager, reload),
-      updateMenu(window, appState),
       ...(isLinux() ? [keyringMenu(window, store)] : []),
       helpMenu(window, shell),
     ])
@@ -192,15 +188,6 @@ const KeyCombinations = {
 const enum MenuItemTypes {
   CheckBox = 'checkbox',
   Radio = 'radio',
-}
-
-const Urls = {
-  Support: SupportMailtoUrl,
-  Website: WebsiteUrl,
-  GitHub: 'https://github.com/standardnotes',
-  Discord: DiscordUrl,
-  Twitter: 'https://twitter.com/StandardNotes',
-  GitHubReleases: 'https://github.com/standardnotes/app/releases',
 }
 
 function macAppMenu(appName: string): MenuItemConstructorOptions {
@@ -431,120 +418,10 @@ function minimizeToTrayItem(store: Store, trayManager: TrayManager, reload: () =
   }
 }
 
-function updateMenu(window: BrowserWindow, appState: AppState) {
-  const updateState = appState.updates
-  let label
-  if (updateState.checkingForUpdate) {
-    label = str().checkingForUpdate
-  } else if (updateState.updateNeeded) {
-    label = str().updateAvailable
-  } else {
-    label = str().updates
-  }
-  const submenu: MenuItemConstructorOptions[] = []
-  const structure = { label, submenu }
-
-  if (autoUpdatingAvailable) {
-    if (updateState.autoUpdateDownloaded && updateState.latestVersion) {
-      submenu.push({
-        label: str().installPendingUpdate(updateState.latestVersion),
-        click() {
-          void showUpdateInstallationDialog(window, appState)
-        },
-      })
-    }
-
-    submenu.push({
-      type: 'checkbox',
-      checked: updateState.enableAutoUpdate,
-      label: str().enableAutomaticUpdates,
-      click() {
-        updateState.toggleAutoUpdate()
-      },
-    })
-
-    submenu.push(Separator)
-  }
-
-  const latestVersion = updateState.latestVersion
-
-  submenu.push({
-    label: str().yourVersion(appState.version),
-  })
-
-  submenu.push({
-    label: latestVersion ? str().latestVersion(latestVersion) : str().releaseNotes,
-    click() {
-      openChangelog(updateState)
-    },
-  })
-
-  if (latestVersion) {
-    submenu.push({
-      label: str().viewReleaseNotes(latestVersion),
-      click() {
-        openChangelog(updateState)
-      },
-    })
-  }
-
-  if (autoUpdatingAvailable) {
-    submenu.push(Separator)
-
-    if (!updateState.checkingForUpdate) {
-      submenu.push({
-        label: str().checkForUpdate,
-        click() {
-          void checkForUpdate(appState, updateState, true)
-        },
-      })
-    }
-
-    if (updateState.lastCheck && !updateState.checkingForUpdate) {
-      submenu.push({
-        label: str().lastUpdateCheck(updateState.lastCheck),
-      })
-    }
-  }
-
-  return structure
-}
-
 function helpMenu(window: Electron.BrowserWindow, shell: Electron.Shell) {
   return {
     role: Roles.Help,
     submenu: [
-      {
-        label: str().emailSupport,
-        click() {
-          void shell.openExternal(Urls.Support)
-        },
-      },
-      {
-        label: str().website,
-        click() {
-          void shell.openExternal(Urls.Website)
-        },
-      },
-      {
-        label: str().gitHub,
-        click() {
-          void shell.openExternal(Urls.GitHub)
-        },
-      },
-      {
-        label: str().discord,
-        click() {
-          void shell.openExternal(Urls.Discord)
-        },
-      },
-      {
-        label: str().twitter,
-        click() {
-          void shell.openExternal(Urls.Twitter)
-        },
-      },
-      Separator,
       {
         label: str().toggleErrorConsole,
         click() {
@@ -568,9 +445,6 @@ function helpMenu(window: Electron.BrowserWindow, shell: Electron.Shell) {
       Separator,
       {
         label: str().version(app.getVersion()),
-        click() {
-          void shell.openExternal(Urls.GitHubReleases)
-        },
       },
     ],
   }
