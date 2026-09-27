@@ -119,8 +119,6 @@ export async function createWindowState({
     }
   })
 
-  window.webContents.session.setSpellCheckerDictionaryDownloadURL('https://dictionaries.standardnotes.org/9.4.4/')
-
   /** handle link clicks */
   window.webContents.setWindowOpenHandler(({ url }) => {
     if (shouldOpenUrl(url)) {

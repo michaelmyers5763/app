@@ -93,7 +93,7 @@ const DisplayOptionsMenu: FunctionComponent<DisplayOptionsMenuProps> = ({
   const selectedTagPreferences = isSystemTag
     ? application.getPreference(PrefKey.SystemViewPreferences)?.[selectedTag.uuid as SystemViewId]
     : selectedTag.preferences
-  const hasSubscription = application.subscriptionController.hasFirstPartyOnlineOrOfflineSubscription()
+  const hasSubscription = true
   const [currentMode, setCurrentMode] = useState<PreferenceMode>(
     (hasSubscription && isRegularTag) || selectedTagPreferences ? 'tag' : 'global',
   )

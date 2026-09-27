@@ -266,7 +266,7 @@ export class WebApplication extends SNApplication implements WebApplicationInter
   }
 
   canShowPurchaseFlow(): boolean {
-    return !this.isAndroid()
+    return false
   }
 
   get isMobileDevice(): boolean {

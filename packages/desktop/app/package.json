@@ -2,7 +2,7 @@
   "name": "@standardnotes/inner-desktop",
   "productName": "Standard Notes",
   "private": true,
-  "version": "3.45.01",
+  "version": "3.45.1",
   "description": "An end-to-end encrypted notes app for digitalists and professionals.",
   "author": "Standard Notes <help@standardnotes.com>",
   "main": "./dist/index.js",
