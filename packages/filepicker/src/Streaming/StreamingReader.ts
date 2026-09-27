@@ -49,7 +49,7 @@ async function readFile(
 
   const processChunk = async (result: ReadableStreamReadResult<Uint8Array>): Promise<void> => {
     if (result.done) {
-      await byteChunker.addBytes(previousChunk, true)
+      await byteChunker.addBytes(previousChunk || new Uint8Array(), true)
       return
     }
 

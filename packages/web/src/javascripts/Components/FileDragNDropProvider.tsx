@@ -197,9 +197,14 @@ const FileDragNDropProvider = ({ application, children }: Props) => {
 
       if (event.dataTransfer?.items.length) {
         Array.from(event.dataTransfer.items).forEach(async (item) => {
-          const fileOrHandle = StreamingFileReader.available()
-            ? ((await item.getAsFileSystemHandle()) as FileSystemFileHandle)
-            : item.getAsFile()
+          let fileOrHandle: File | FileSystemFileHandle | null = item.getAsFile()
+          if (!fileOrHandle && typeof item.getAsFileSystemHandle === 'function') {
+            try {
+              fileOrHandle = (await item.getAsFileSystemHandle()) as FileSystemFileHandle
+            } catch (err) {
+              console.error('Failed to get file handle from drag item', err)
+            }
+          }
 
           if (!fileOrHandle) {
             return
