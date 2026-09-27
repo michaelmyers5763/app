@@ -77,12 +77,7 @@ const ClipperView = ({ applicationGroup }: { applicationGroup: WebApplicationGro
   useEffect(() => {
     application.sessions.refreshSessionIfExpiringSoon().catch(console.error)
   }, [application.sessions])
-  const [isEntitledToExtension, setIsEntitled] = useState(
-    () =>
-      application.features.getFeatureStatus(
-        NativeFeatureIdentifier.create(NativeFeatureIdentifier.TYPES.Clipper).getValue(),
-      ) === FeatureStatus.Entitled,
-  )
+  const [isEntitledToExtension, setIsEntitled] = useState(true)
   const isEntitledRef = useStateRef(isEntitledToExtension)
   const hasSubscription = application.hasValidFirstPartySubscription()
   useEffect(() => {

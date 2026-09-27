@@ -97,11 +97,7 @@ const Navigation = forwardRef<HTMLDivElement, Props>(({ application, className, 
           label={c('B4.Notes.TagsLinkedItems.AriaLabel').t`Go to items list`}
           icon="chevron-left"
         />
-        <UpgradeNow
-          application={application}
-          subscriptionContoller={application.subscriptionController}
-          featuresController={application.featuresController}
-        />
+        <UpgradeNow />
         <RoundIconButton
           className="ml-2.5 bg-default"
           onClick={() => {
