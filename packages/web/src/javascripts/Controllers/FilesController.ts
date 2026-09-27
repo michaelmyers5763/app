@@ -506,8 +506,8 @@ export class FilesController extends AbstractViewController<FilesControllerEvent
       const fileToUpload =
         fileOrHandle instanceof File
           ? fileOrHandle
-          : fileOrHandle instanceof FileSystemFileHandle && this.shouldUseStreamingAPI
-          ? await fileOrHandle.getFile()
+          : typeof (fileOrHandle as any)?.getFile === 'function'
+          ? await (fileOrHandle as FileSystemFileHandle).getFile()
           : undefined
 
       if (!fileToUpload) {
@@ -601,8 +601,12 @@ export class FilesController extends AbstractViewController<FilesControllerEvent
       const fileResult = await this.reader.readFile(fileToUpload, minimumChunkSize, onChunk)
 
       if (!fileResult.mimeType) {
-        const { ext } = parseFileName(fileToUpload.name)
-        fileResult.mimeType = await this.archiveService.getMimeType(ext)
+        try {
+          const { ext } = parseFileName(fileToUpload.name)
+          fileResult.mimeType = (await this.archiveService.getMimeType(ext)) || 'application/octet-stream'
+        } catch {
+          fileResult.mimeType = 'application/octet-stream'
+        }
       }
 
       const uploadedFile = await this.files.finishUpload(operation, fileResult, uuid)

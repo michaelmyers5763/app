@@ -1,7 +1,6 @@
 import { WebApplication } from '@/Application/WebApplication'
 import { classNames } from '@standardnotes/utils'
 import { isHandlingFileDrag } from '@/Utils/DragTypeCheck'
-import { StreamingFileReader } from '@standardnotes/filepicker'
 import { FileItem, SNNote } from '@standardnotes/snjs'
 import { useMemo, useState, createContext, ReactNode, useRef, useCallback, useEffect, useContext, memo } from 'react'
 import Portal from './Portal/Portal'
@@ -197,9 +196,14 @@ const FileDragNDropProvider = ({ application, children }: Props) => {
 
       if (event.dataTransfer?.items.length) {
         Array.from(event.dataTransfer.items).forEach(async (item) => {
-          const fileOrHandle = StreamingFileReader.available()
-            ? ((await item.getAsFileSystemHandle()) as FileSystemFileHandle)
-            : item.getAsFile()
+          let fileOrHandle: File | FileSystemFileHandle | null = item.getAsFile()
+          if (!fileOrHandle && typeof item.getAsFileSystemHandle === 'function') {
+            try {
+              fileOrHandle = (await item.getAsFileSystemHandle()) as FileSystemFileHandle
+            } catch (err) {
+              console.error('Failed to get file handle from drag item', err)
+            }
+          }
 
           if (!fileOrHandle) {
             return

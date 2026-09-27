@@ -348,10 +348,7 @@ class Footer extends AbstractComponent<Props, State> {
     this.application.accountMenuController.closeAccountMenu()
   }
 
-  openPreferences = (openWhatsNew: boolean) => {
-    if (openWhatsNew) {
-      this.application.preferencesController.setCurrentPane('whats-new')
-    }
+  openPreferences = () => {
     this.application.preferencesController.openPreferences()
   }
 
@@ -423,11 +420,6 @@ class Footer extends AbstractComponent<Props, State> {
                 {this.state.showSyncResolution && (
                   <SyncResolutionMenu close={this.syncResolutionClickHandler} application={this.application} />
                 )}
-              </div>
-            )}
-            {this.state.offline && (
-              <div className="relative z-footer-bar-item ml-3 flex flex-shrink-0 select-none items-center text-xs font-bold">
-                {c('B2.NavSharedUI.Status').t`Offline`}
               </div>
             )}
             {this.state.hasPasscode && (
