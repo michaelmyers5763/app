@@ -30,7 +30,7 @@ export const getNoteFormat = (application: WebApplicationInterface, note: SNNote
 
 export const getNoteFileName = (application: WebApplicationInterface, note: SNNote): string => {
   const format = getNoteFormat(application, note)
-  const filename = sanitizeFileName(note.title)
+  const filename = sanitizeFileName(note.title || 'Untitled Note')
   return `${filename}.${format}`
 }
 
@@ -40,7 +40,7 @@ const superHTML = (note: SNNote, content: string) => `<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>${note.title}</title>
+    <title>${note.title || 'Untitled Note'}</title>
     <style>
 ${snColorsCSS.toString()}
 ${superEditorCSS.toString()}
@@ -54,7 +54,7 @@ ${exportOverridesCSS.toString()}
 `
 
 const superMarkdown = (note: SNNote, content: string) => `---
-title: ${note.title}
+title: ${note.title || 'Untitled Note'}
 created_at: ${note.created_at.toISOString()}
 updated_at: ${note.serverUpdatedAt.toISOString()}
 uuid: ${note.uuid}

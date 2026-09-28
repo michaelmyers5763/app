@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react'
 import { ListableContentItem } from './Types/ListableContentItem'
 import Icon from '../Icon/Icon'
 import { classNames } from '@standardnotes/snjs'
+import { c } from 'ttag'
 
 export const ListItemTitle: FunctionComponent<{ item: ListableContentItem }> = ({ item }) => {
   return (
@@ -16,7 +17,7 @@ export const ListItemTitle: FunctionComponent<{ item: ListableContentItem }> = (
           <Icon type="pin-filled" size="custom" className="h-3 w-3" />
         </span>
       )}
-      {item.title}
+      {item.title || c('B2.NavSharedUI.Placeholder').t`Untitled Note`}
     </div>
   )
 }
