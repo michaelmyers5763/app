@@ -1,6 +1,6 @@
 import anyTest, { TestFn } from 'ava'
 import { MenuItem } from 'electron'
-import { AppName } from '../app/javascripts/Main/strings'
+import { AppName } from '../app/javascripts/Main/Strings'
 import { createDriver, Driver } from './driver'
 
 const test = anyTest as TestFn<{

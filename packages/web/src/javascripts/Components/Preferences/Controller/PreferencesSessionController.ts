@@ -29,15 +29,14 @@ export class PreferencesSessionController {
 
     this._menu = menuItems.sort((a, b) => a.order - b.order)
 
-    makeAutoObservable<
-      PreferencesSessionController,
-      '_selectedPane' | '_twoFactorAuth' | '_extensionPanes' | 'updateMenuBubbleCounts'
-    >(this, {
-      _twoFactorAuth: observable,
-      _selectedPane: observable,
-      _extensionPanes: observable.ref,
-      updateMenuBubbleCounts: action,
-    })
+    makeAutoObservable<PreferencesSessionController, '_selectedPane' | '_extensionPanes' | 'updateMenuBubbleCounts'>(
+      this,
+      {
+        _selectedPane: observable,
+        _extensionPanes: observable.ref,
+        updateMenuBubbleCounts: action,
+      },
+    )
 
     this.application.status.addEventObserver((event) => {
       if (event === StatusServiceEvent.PreferencesBubbleCountChanged) {
