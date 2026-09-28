@@ -45,7 +45,9 @@ jobs:
 
   build-docker:
     runs-on: ubuntu-latest
-    if: ${{ secrets.DOCKER_USERNAME != '' }}
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+    if: ${{ env.DOCKER_USERNAME != '' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -77,7 +79,9 @@ jobs:
   e2e-base:
     name: E2E Base Test Suite
     needs: build-docker
-    if: ${{ secrets.CI_PAT_TOKEN != '' }}
+    env:
+      CI_PAT_TOKEN: ${{ secrets.CI_PAT_TOKEN }}
+    if: ${{ env.CI_PAT_TOKEN != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Run E2E test suite
@@ -96,7 +100,9 @@ jobs:
   e2e-vaults:
     name: E2E Vaults Test Suite
     needs: build-docker
-    if: ${{ secrets.CI_PAT_TOKEN != '' }}
+    env:
+      CI_PAT_TOKEN: ${{ secrets.CI_PAT_TOKEN }}
+    if: ${{ env.CI_PAT_TOKEN != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Run E2E vaults test suite

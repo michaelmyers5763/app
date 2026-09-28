@@ -10,7 +10,9 @@ on:
 
 jobs:
   git-sync:
-    if: ${{ secrets.SSH_PRIVATE_KEY != '' }}
+    env:
+      SSH_PRIVATE_KEY_SET: ${{ secrets.SSH_PRIVATE_KEY }}
+    if: ${{ env.SSH_PRIVATE_KEY_SET != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: git-sync
