@@ -26,9 +26,6 @@ const ConfirmSignoutModal: FunctionComponent<Props> = ({ application, applicatio
     application.accountMenuController.setSigningOut(false)
   }, [application.accountMenuController])
 
-  const workspaces = applicationGroup.getDescriptors()
-  const showWorkspaceWarning = workspaces.length > 1 && isDesktopApplication()
-
   const confirm = useCallback(() => {
     application.user.signOut().catch(console.error)
 
@@ -46,16 +43,6 @@ const ConfirmSignoutModal: FunctionComponent<Props> = ({ application, applicatio
       <div className="sk-panel-row">
         <div>
           <p className="text-base text-foreground lg:text-sm">{StringSignOutConfirmation()}</p>
-          {showWorkspaceWarning && (
-            <>
-              <br />
-              <p className="text-base text-foreground lg:text-sm">
-                <strong>{c('B1.Account.Session.Label').t`Note:`} </strong>
-                {c('B1.Account.Session.Info')
-                  .t`Because you have other workspaces signed in, this sign out may leave logs and other metadata of your session on this device. For a more robust sign out that performs a hard clear of all app-related data, use the "Sign out all workspaces" option under "Switch workspace".`}
-              </p>
-            </>
-          )}
         </div>
       </div>
 

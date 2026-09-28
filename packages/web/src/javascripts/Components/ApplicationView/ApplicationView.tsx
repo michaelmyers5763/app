@@ -17,7 +17,6 @@ import { addToast, ToastContainer, ToastType } from '@standardnotes/toast'
 import { c } from 'ttag'
 import FilePreviewModalWrapper from '@/Components/FilePreview/FilePreviewModal'
 import FileContextMenuWrapper from '@/Components/FileContextMenu/FileContextMenu'
-import PermissionsModalWrapper from '@/Components/PermissionsModal/PermissionsModalWrapper'
 import TagContextMenuWrapper from '@/Components/Tags/TagContextMenuWrapper'
 import FileDragNDropProvider from '../FileDragNDropProvider'
 import ResponsivePaneProvider from '../Panes/ResponsivePaneProvider'
@@ -267,7 +266,6 @@ const ApplicationView: FunctionComponent<Props> = ({ application, mainApplicatio
                     <ConfirmSignoutContainer applicationGroup={mainApplicationGroup} application={application} />
                     <ToastContainer />
                     <FilePreviewModalWrapper application={application} />
-                    <PermissionsModalWrapper application={application} />
                     <EditorWidthSelectionModalWrapper />
                     <ConfirmDeleteAccountContainer application={application} />
                     <ImportModal importModalController={application.importModalController} />

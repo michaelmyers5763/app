@@ -6,7 +6,6 @@ import { useCallback, useMemo, useState, FunctionComponent } from 'react'
 import { AccountMenuPane } from './AccountMenuPane'
 import Menu from '@/Components/Menu/Menu'
 import MenuItem from '@/Components/Menu/MenuItem'
-import WorkspaceSwitcherOption from './WorkspaceSwitcher/WorkspaceSwitcherOption'
 import { WebApplicationGroup } from '@/Application/WebApplicationGroup'
 import { formatLastSyncDate } from '@/Utils/DateUtils'
 import Spinner from '@/Components/Spinner/Spinner'
@@ -139,11 +138,7 @@ const GeneralAccountMenu: FunctionComponent<Props> = ({ closeMenu, mainApplicati
       <Menu
         a11yLabel={c('B1.Account.Session.Label').t`General account menu`}
         closeMenu={closeMenu}
-        initialFocus={!application.hasAccount() ? CREATE_ACCOUNT_INDEX : SWITCHER_INDEX}
       >
-        <MenuSection className="md:border-t md:pt-2">
-          <WorkspaceSwitcherOption mainApplicationGroup={mainApplicationGroup} />
-        </MenuSection>
         <MenuSection>
           {user && (
             <MenuItem onClick={openPreferences}>

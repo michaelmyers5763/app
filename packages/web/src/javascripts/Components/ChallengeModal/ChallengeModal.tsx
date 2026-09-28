@@ -14,7 +14,6 @@ import { FunctionComponent, useCallback, useEffect, useRef, useState } from 'rea
 import Button from '@/Components/Button/Button'
 import Icon from '@/Components/Icon/Icon'
 import ChallengeModalPrompt from './ChallengePrompt'
-import LockscreenWorkspaceSwitcher from './LockscreenWorkspaceSwitcher'
 import { WebApplicationGroup } from '@/Application/WebApplicationGroup'
 import { ChallengeModalValues } from './ChallengeModalValues'
 import { InputValue } from './InputValue'
@@ -26,7 +25,7 @@ import { useAutoElementRect } from '@/Hooks/useElementRect'
 
 type Props = {
   application: WebApplication
-  mainApplicationGroup: WebApplicationGroup
+  mainApplicationGroup?: WebApplicationGroup
   challenge: Challenge
   onDismiss?: (challenge: Challenge) => void
 }
@@ -65,11 +64,6 @@ const ChallengeModal: FunctionComponent<Props> = ({ application, mainApplication
   const [isProcessing, setIsProcessing] = useState(false)
   const [, setProcessingPrompts] = useState<ChallengePrompt[]>([])
 
-  const shouldShowForgotPasscode = [ChallengeReason.ApplicationUnlock, ChallengeReason.Migration].includes(
-    challenge.reason,
-  )
-
-  const shouldShowWorkspaceSwitcher = challenge.reason === ChallengeReason.ApplicationUnlock
 
   const submit = useCallback(() => {
     const validatedValues = validateValues(values, challenge.prompts)
@@ -309,31 +303,6 @@ const ChallengeModal: FunctionComponent<Props> = ({ application, mainApplication
                 : c('B5.SecuritySync.Challenge.Action').t`Submit`}
             </Button>
           )}
-          {shouldShowForgotPasscode && (
-            <Button
-              className="flex min-w-76 items-center justify-center"
-              onClick={() => {
-                application.alerts
-                  .confirm(
-                    c('B5.SecuritySync.Passcode.Info')
-                      .t`If you forgot your local passcode, your only option is to clear your local data from this device and sign back in to your account.`,
-                    c('B5.SecuritySync.Passcode.Title').t`Forgot passcode?`,
-                    c('B5.SecuritySync.Passcode.Action').t`Delete local data`,
-                    ButtonType.Danger,
-                  )
-                  .then((shouldDeleteLocalData) => {
-                    if (shouldDeleteLocalData) {
-                      application.user.signOut().catch(console.error)
-                    }
-                  })
-                  .catch(console.error)
-              }}
-            >
-              <Icon type="help" className="mr-2 text-neutral" />
-              {c('B5.SecuritySync.Passcode.Title').t`Forgot passcode?`}
-            </Button>
-          )}
-          {shouldShowWorkspaceSwitcher && <LockscreenWorkspaceSwitcher mainApplicationGroup={mainApplicationGroup} />}
         </div>
       </Modal>
     </ModalOverlay>

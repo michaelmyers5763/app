@@ -52,4 +52,4 @@ export function updates() {
   return str().updates
 }
 
-export const AppName = 'Standard Notes'
+export const AppName = 'Unknown Notes'
