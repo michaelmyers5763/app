@@ -12,10 +12,10 @@ jobs:
   git-sync:
     env:
       SSH_PRIVATE_KEY_SET: ${{ secrets.SSH_PRIVATE_KEY }}
-    if: ${{ env.SSH_PRIVATE_KEY_SET != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: git-sync
+        if: ${{ env.SSH_PRIVATE_KEY_SET != '' }}
         uses: wei/git-sync@v3
         with:
           source_repo: "standardnotes/app"
