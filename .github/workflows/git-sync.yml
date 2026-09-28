@@ -12,6 +12,7 @@ jobs:
   git-sync:
     env:
       SSH_PRIVATE_KEY_SET: ${{ secrets.SSH_PRIVATE_KEY }}
+      CI_PAT_TOKEN_SET: ${{ secrets.CI_PAT_TOKEN }}
     runs-on: ubuntu-latest
     steps:
       - name: git-sync
@@ -25,32 +26,37 @@ jobs:
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Sleep to allow git-sync to fully complete
+        if: ${{ env.SSH_PRIVATE_KEY_SET != '' }}
         run: sleep 10
         shell: bash
 
       - uses: actions/checkout@v3
+        if: ${{ env.CI_PAT_TOKEN_SET != '' }}
         with:
           token: ${{ secrets.CI_PAT_TOKEN }}
           repository: standardnotes/internal-app
           ref: ${{ github.ref }}
 
       - name: Extract branch name
+        if: ${{ env.CI_PAT_TOKEN_SET != '' }}
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
 
       - name: Find open PR
+        if: ${{ env.CI_PAT_TOKEN_SET != '' }}
         uses: juliangruber/find-pull-request-action@v1
         id: find-pull-request
         with:
           branch: ${{ steps.extract_branch.outputs.branch }}
       - run: echo "Pull Request ${number} (${sha})"
+        if: ${{ env.CI_PAT_TOKEN_SET != '' }}
         env:
           number: ${{ steps.find-pull-request.outputs.number }}
           sha: ${{ steps.find-pull-request.outputs.head-sha }}
 
       - uses: peter-evans/create-pull-request@v4
-        if: startsWith(github.event.head_commit.message, 'chore(deps)') == false && startsWith(github.event.head_commit.message, 'chore(deps-dev)') == false
+        if: env.CI_PAT_TOKEN_SET != '' && startsWith(github.event.head_commit.message, 'chore(deps)') == false && startsWith(github.event.head_commit.message, 'chore(deps-dev)') == false
         with:
           token: ${{ secrets.CI_PAT_TOKEN }}
           branch: ${{ github.ref }}
