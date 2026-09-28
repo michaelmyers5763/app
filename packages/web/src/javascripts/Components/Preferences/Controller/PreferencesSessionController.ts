@@ -31,10 +31,7 @@ export class PreferencesSessionController {
 
     makeAutoObservable<
       PreferencesSessionController,
-      | '_selectedPane'
-      | '_twoFactorAuth'
-      | '_extensionPanes'
-      | 'updateMenuBubbleCounts'
+      '_selectedPane' | '_twoFactorAuth' | '_extensionPanes' | 'updateMenuBubbleCounts'
     >(this, {
       _twoFactorAuth: observable,
       _selectedPane: observable,
@@ -57,7 +54,6 @@ export class PreferencesSessionController {
       }
     })
   }
-
 
   get menuItems(): SelectableMenuItem[] {
     const menuItems = this._menu.map((preference) => {

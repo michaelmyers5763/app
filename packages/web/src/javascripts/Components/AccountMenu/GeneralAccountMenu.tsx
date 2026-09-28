@@ -18,14 +18,14 @@ import { AppName, jtString, SupportMailtoUrl } from '@standardnotes/features'
 import { c } from 'ttag'
 
 type Props = {
-  mainApplicationGroup: WebApplicationGroup
+  mainApplicationGroup?: WebApplicationGroup
   setMenuPane: (pane: AccountMenuPane) => void
   closeMenu: () => void
 }
 
 const iconClassName = `text-neutral mr-2 ${MenuItemIconSize}`
 
-const GeneralAccountMenu: FunctionComponent<Props> = ({ closeMenu, mainApplicationGroup }) => {
+const GeneralAccountMenu: FunctionComponent<Props> = ({ closeMenu }) => {
   const application = useApplication()
 
   const [isSyncingInProgress, setIsSyncingInProgress] = useState(false)
@@ -75,9 +75,6 @@ const GeneralAccountMenu: FunctionComponent<Props> = ({ closeMenu, mainApplicati
   const signOut = useCallback(() => {
     application.accountMenuController.setSigningOut(true)
   }, [application])
-
-  const CREATE_ACCOUNT_INDEX = 1
-  const SWITCHER_INDEX = 0
 
   const keyboardShortcutsHelpShortcut = useMemo(() => {
     return application.keyboardService.keyboardShortcutForCommand(TOGGLE_KEYBOARD_SHORTCUTS_MODAL)
@@ -135,10 +132,7 @@ const GeneralAccountMenu: FunctionComponent<Props> = ({ closeMenu, mainApplicati
           </div>
         </>
       )}
-      <Menu
-        a11yLabel={c('B1.Account.Session.Label').t`General account menu`}
-        closeMenu={closeMenu}
-      >
+      <Menu a11yLabel={c('B1.Account.Session.Label').t`General account menu`} closeMenu={closeMenu}>
         <MenuSection>
           {user && (
             <MenuItem onClick={openPreferences}>

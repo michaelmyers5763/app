@@ -3,7 +3,6 @@ import { StringSignOutConfirmation } from '@/Constants/Strings'
 import { WebApplication } from '@/Application/WebApplication'
 import { observer } from 'mobx-react-lite'
 import { WebApplicationGroup } from '@/Application/WebApplicationGroup'
-import { isDesktopApplication } from '@/Utils'
 import Button from '@/Components/Button/Button'
 import Icon from '../Icon/Icon'
 import AlertDialog from '../AlertDialog/AlertDialog'
@@ -12,10 +11,10 @@ import { c } from 'ttag'
 
 type Props = {
   application: WebApplication
-  applicationGroup: WebApplicationGroup
+  applicationGroup?: WebApplicationGroup
 }
 
-const ConfirmSignoutModal: FunctionComponent<Props> = ({ application, applicationGroup }) => {
+const ConfirmSignoutModal: FunctionComponent<Props> = ({ application }) => {
   const hasAnyBackupsEnabled =
     application.fileBackups?.isFilesBackupsEnabled() ||
     application.fileBackups?.isPlaintextBackupsEnabled() ||

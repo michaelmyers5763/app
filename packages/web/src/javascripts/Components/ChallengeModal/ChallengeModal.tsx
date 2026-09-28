@@ -1,7 +1,6 @@
 import { WebApplication } from '@/Application/WebApplication'
 import { c } from 'ttag'
 import {
-  ButtonType,
   Challenge,
   ChallengePrompt,
   ChallengeReason,
@@ -46,7 +45,7 @@ const validateValues = (values: ChallengeModalValues, prompts: ChallengePrompt[]
   return undefined
 }
 
-const ChallengeModal: FunctionComponent<Props> = ({ application, mainApplicationGroup, challenge, onDismiss }) => {
+const ChallengeModal: FunctionComponent<Props> = ({ application, challenge, onDismiss }) => {
   const promptsContainerRef = useRef<HTMLFormElement>(null)
 
   const [values, setValues] = useState<ChallengeModalValues>(() => {
@@ -63,7 +62,6 @@ const ChallengeModal: FunctionComponent<Props> = ({ application, mainApplication
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
   const [, setProcessingPrompts] = useState<ChallengePrompt[]>([])
-
 
   const submit = useCallback(() => {
     const validatedValues = validateValues(values, challenge.prompts)
