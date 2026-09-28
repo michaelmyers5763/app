@@ -6,10 +6,10 @@ import { useApplication } from '@/Components/ApplicationProvider'
 import { c } from 'ttag'
 
 type Props = {
-  is2FAEnabled: boolean
+  is2FAEnabled?: boolean
 }
 
-const U2FDescription: FunctionComponent<Props> = ({ is2FAEnabled }) => {
+const U2FDescription: FunctionComponent<Props> = () => {
   const application = useApplication()
 
   if (application.sessions.getUser() === undefined) {
@@ -25,10 +25,6 @@ const U2FDescription: FunctionComponent<Props> = ({ is2FAEnabled }) => {
       {!application.isFullU2FClient && (
         <Text className="italic">{c('B6.Preferences.Security.Info')
           .t`Please visit the web app in order to add a hardware security key.`}</Text>
-      )}
-      {!is2FAEnabled && (
-        <Text className="italic">{c('B6.Preferences.Security.Info')
-          .t`You must enable two-factor authentication before adding a hardware security key.`}</Text>
       )}
     </div>
   )

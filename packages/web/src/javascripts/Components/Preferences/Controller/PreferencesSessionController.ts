@@ -35,14 +35,8 @@ export class PreferencesSessionController {
 
     makeAutoObservable<
       PreferencesSessionController,
-      | '_selectedPane'
-      | '_twoFactorAuth'
-      | '_extensionPanes'
-      | '_extensionLatestVersions'
-      | 'loadLatestVersions'
-      | 'updateMenuBubbleCounts'
+      '_selectedPane' | '_extensionPanes' | '_extensionLatestVersions' | 'loadLatestVersions' | 'updateMenuBubbleCounts'
     >(this, {
-      _twoFactorAuth: observable,
       _selectedPane: observable,
       _extensionPanes: observable.ref,
       _extensionLatestVersions: observable.ref,
