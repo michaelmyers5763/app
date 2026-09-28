@@ -170,7 +170,9 @@ const ItemNameCell = ({ item, hideIcon }: { item: DecryptedItemInterface; hideIc
           </div>
         )}
       </span>
-      <span className="overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium">{item.title}</span>
+      <span className="overflow-hidden text-ellipsis whitespace-nowrap text-sm font-medium">
+        {item.title || c('B2.NavSharedUI.Placeholder').t`Untitled Note`}
+      </span>
       <ListItemVaultInfo item={item} />
       {item.protected && (
         <span className="flex items-center" title={c('B3.Notes.NoteList.Info').t`File is protected`}>

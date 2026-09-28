@@ -2,7 +2,7 @@ import { DecryptedItemInterface, ItemContent, isNote, isTag } from '@standardnot
 import { WebApplicationInterface } from '@standardnotes/ui-services'
 
 export function getItemTitleInContextOfLinkBubble(item: DecryptedItemInterface<ItemContent>) {
-  return item.title && item.title.length > 0 ? item.title : isNote(item) ? item.preview_plain : ''
+  return item.title && item.title.length > 0 ? item.title : isNote(item) ? item.preview_plain || 'Untitled Note' : ''
 }
 
 function getItemSearchableString(item: DecryptedItemInterface<ItemContent>, application: WebApplicationInterface) {

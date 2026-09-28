@@ -229,7 +229,7 @@ function CommandPalette() {
         section,
         id: UuidGenerator.GenerateUuid(),
         itemUuid: item.uuid,
-        description: item.title || c('B2.NavSharedUI.Placeholder').t`<no title>`,
+        description: item.title || c('B2.NavSharedUI.Placeholder').t`Untitled Note`,
         icon: <Icon type={icon[0]} className={item instanceof SNNote ? icon[1] : ''} />,
       }
     },
@@ -298,10 +298,11 @@ function CommandPalette() {
             break
           }
           const decryptedItem = interactableItems[i]
-          if (!decryptedItem || !decryptedItem.title) {
+          if (!decryptedItem) {
             continue
           }
-          const index = decryptedItem.title.toLowerCase().indexOf(searchQuery)
+          const itemTitle = decryptedItem.title || c('B2.NavSharedUI.Placeholder').t`Untitled Note`
+          const index = itemTitle.toLowerCase().indexOf(searchQuery)
           if (index === -1) {
             continue
           }

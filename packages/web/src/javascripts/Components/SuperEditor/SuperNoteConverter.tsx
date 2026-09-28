@@ -79,7 +79,7 @@ const SuperNoteConverter = ({
     }
 
     const templateNoteForRevision = application.items.createTemplateItem<NoteContent, SNNote>(ContentType.TYPES.Note, {
-      title: note.title,
+      title: note.title || 'Untitled Note',
       text: convertedContent,
       references: note.references,
     })
