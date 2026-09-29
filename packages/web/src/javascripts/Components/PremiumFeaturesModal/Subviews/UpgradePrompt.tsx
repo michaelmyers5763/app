@@ -92,7 +92,7 @@ export const UpgradePrompt = ({
       </div>
       <div className={preferHorizontalLayout ? '' : 'mb-2'}>
         <div className={classNames('mb-1 text-lg font-bold', preferHorizontalLayout ? 'text-left' : 'text-center')}>
-          {c('B7.FilesSubscriptionHelp.Subscription.Title').t`Enable Advanced Features`}
+          {c('B7.FilesSubscriptionHelp.Subscription.Title').t`Features Available`}
         </div>
         <div
           className={classNames('text-sm text-passive-1', preferHorizontalLayout ? 'text-left' : 'px-4.5 text-center')}
@@ -102,7 +102,7 @@ export const UpgradePrompt = ({
             <span>
               {jtString(
                 c('B7.FilesSubscriptionHelp.Subscription.Info')
-                  .jt`To take advantage of all the advanced features ${AppName} has to offer, upgrade your current plan.`,
+                  .jt`All features in ${AppName} are fully unlocked and available for use.`,
               )}
             </span>
           )}
