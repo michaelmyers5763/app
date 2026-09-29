@@ -46,26 +46,11 @@ const ChangeEditorMenu: FunctionComponent<ChangeEditorMenuProps> = ({
   setDisableClickOutside,
 }) => {
   const [groups, setGroups] = useState<EditorMenuGroup[]>([])
-  const [unableToFindEditor, setUnableToFindEditor] = useState(false)
 
   const reloadGroups = useCallback(() => {
     const groups = createEditorMenuGroups(application)
     setGroups(groups)
-
-    if (note && note.editorIdentifier) {
-      let didFindEditor = false
-      for (const group of groups) {
-        for (const item of group.items) {
-          if (item.uiFeature.featureIdentifier === note.editorIdentifier) {
-            didFindEditor = true
-            break
-          }
-        }
-      }
-
-      setUnableToFindEditor(!didFindEditor)
-    }
-  }, [application, note])
+  }, [application])
 
   useEffect(() => {
     application.items.streamItems([ContentType.TYPES.Component], reloadGroups)
@@ -247,10 +232,6 @@ const ChangeEditorMenu: FunctionComponent<ChangeEditorMenuProps> = ({
     setDisableClickOutside?.(false)
   }
 
-  const managePlugins = useCallback(() => {
-    application.openPreferences('plugins')
-  }, [application])
-
   return (
     <>
       <Menu className="pb-1 pt-0.5" a11yLabel={c('B4.Notes.EditingUI.Label').t`Change note type menu`}>
@@ -258,16 +239,7 @@ const ChangeEditorMenu: FunctionComponent<ChangeEditorMenuProps> = ({
           <div className="flex items-center justify-between py-3 pr-4 md:pb-1 md:pt-0">
             <div className="px-3">
               <h2 className="text-base font-bold">{c('B4.Notes.EditingUI.Label').t`Choose a note type`}</h2>
-              {unableToFindEditor && (
-                <p className="mr-2 pt-1 text-xs text-warning">
-                  {c('B4.Notes.EditingUI.Error')
-                    .t`Unable to find system editor for this note. Select Manage Plugins to reinstall this editor.`}
-                </p>
-              )}
             </div>
-            <button className="cursor-pointer whitespace-nowrap text-right text-xs text-info" onClick={managePlugins}>
-              {c('B4.Notes.EditingUI.Action').t`Manage Plugins`}
-            </button>
           </div>
         </MenuSection>
 

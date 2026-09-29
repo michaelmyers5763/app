@@ -1,7 +1,6 @@
 import { action, makeAutoObservable, observable } from 'mobx'
 import { c } from 'ttag'
 import { WebApplication } from '@/Application/WebApplication'
-import { PackageProvider } from '../Panes/Plugins/PackageProvider'
 import { securityPrefsHasBubble } from '../Panes/Security/securityPrefsHasBubble'
 import { PreferencePaneId, StatusServiceEvent } from '@standardnotes/services'
 import { PreferencesMenuItem } from './PreferencesMenuItem'
@@ -15,7 +14,6 @@ import { PREFERENCES_MENU_ITEMS, READY_PREFERENCES_MENU_ITEMS } from './MenuItem
 export class PreferencesSessionController {
   private _selectedPane: PreferencePaneId = 'general'
   private _menu: PreferencesMenuItem[]
-  private _extensionLatestVersions: PackageProvider = new PackageProvider(new Map())
 
   constructor(
     private application: WebApplication,
@@ -31,16 +29,8 @@ export class PreferencesSessionController {
 
     this._menu = menuItems.sort((a, b) => a.order - b.order)
 
-    this.loadLatestVersions()
-
-    makeAutoObservable<
-      PreferencesSessionController,
-      '_selectedPane' | '_extensionPanes' | '_extensionLatestVersions' | 'loadLatestVersions' | 'updateMenuBubbleCounts'
-    >(this, {
+    makeAutoObservable<PreferencesSessionController, '_selectedPane' | 'updateMenuBubbleCounts'>(this, {
       _selectedPane: observable,
-      _extensionPanes: observable.ref,
-      _extensionLatestVersions: observable.ref,
-      loadLatestVersions: action,
       updateMenuBubbleCounts: action,
     })
 
@@ -58,20 +48,6 @@ export class PreferencesSessionController {
         bubbleCount: this.application.status.getPreferencesBubbleCount(item.id),
       }
     })
-  }
-
-  private loadLatestVersions(): void {
-    PackageProvider.load()
-      .then((versions) => {
-        if (versions) {
-          this._extensionLatestVersions = versions
-        }
-      })
-      .catch(console.error)
-  }
-
-  get extensionsLatestVersions(): PackageProvider {
-    return this._extensionLatestVersions
   }
 
   get menuItems(): SelectableMenuItem[] {

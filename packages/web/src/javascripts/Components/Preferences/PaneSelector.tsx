@@ -8,7 +8,6 @@ import AccountPreferences from './Panes/Account/AccountPreferences'
 import Security from './Panes/Security/Security'
 import { PreferencesProps } from './PreferencesProps'
 import Vaults from './Panes/Vaults/Vaults'
-import PluginsPane from './Panes/Plugins/PluginsPane'
 
 const PaneSelector: FunctionComponent<PreferencesProps & { menu: PreferencesSessionController }> = ({
   menu,
@@ -29,8 +28,6 @@ const PaneSelector: FunctionComponent<PreferencesProps & { menu: PreferencesSess
       return <Backups application={application} />
     case 'shortcuts':
       return null
-    case 'plugins':
-      return <PluginsPane pluginsLatestVersions={menu.extensionsLatestVersions} />
     case 'accessibility':
       return null
     case 'get-free-month':

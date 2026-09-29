@@ -6,7 +6,6 @@ import { useCallback, useMemo, useState, FunctionComponent } from 'react'
 import { AccountMenuPane } from './AccountMenuPane'
 import Menu from '@/Components/Menu/Menu'
 import MenuItem from '@/Components/Menu/MenuItem'
-import WorkspaceSwitcherOption from './WorkspaceSwitcher/WorkspaceSwitcherOption'
 import { WebApplicationGroup } from '@/Application/WebApplicationGroup'
 import { formatLastSyncDate } from '@/Utils/DateUtils'
 import Spinner from '@/Components/Spinner/Spinner'
@@ -26,7 +25,7 @@ type Props = {
 
 const iconClassName = `text-neutral mr-2 ${MenuItemIconSize}`
 
-const GeneralAccountMenu: FunctionComponent<Props> = ({ closeMenu, mainApplicationGroup }) => {
+const GeneralAccountMenu: FunctionComponent<Props> = ({ closeMenu, mainApplicationGroup: _mainApplicationGroup }) => {
   const application = useApplication()
 
   const [isSyncingInProgress, setIsSyncingInProgress] = useState(false)
@@ -76,9 +75,6 @@ const GeneralAccountMenu: FunctionComponent<Props> = ({ closeMenu, mainApplicati
   const signOut = useCallback(() => {
     application.accountMenuController.setSigningOut(true)
   }, [application])
-
-  const CREATE_ACCOUNT_INDEX = 1
-  const SWITCHER_INDEX = 0
 
   const keyboardShortcutsHelpShortcut = useMemo(() => {
     return application.keyboardService.keyboardShortcutForCommand(TOGGLE_KEYBOARD_SHORTCUTS_MODAL)
@@ -136,14 +132,7 @@ const GeneralAccountMenu: FunctionComponent<Props> = ({ closeMenu, mainApplicati
           </div>
         </>
       )}
-      <Menu
-        a11yLabel={c('B1.Account.Session.Label').t`General account menu`}
-        closeMenu={closeMenu}
-        initialFocus={!application.hasAccount() ? CREATE_ACCOUNT_INDEX : SWITCHER_INDEX}
-      >
-        <MenuSection className="md:border-t md:pt-2">
-          <WorkspaceSwitcherOption mainApplicationGroup={mainApplicationGroup} />
-        </MenuSection>
+      <Menu a11yLabel={c('B1.Account.Session.Label').t`General account menu`} closeMenu={closeMenu}>
         <MenuSection>
           {user && (
             <MenuItem onClick={openPreferences}>
