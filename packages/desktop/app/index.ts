@@ -79,7 +79,8 @@ function migrateSnapStorage() {
         fileName !== 'SingletonLock' &&
         fileName !== 'SingletonCookie' &&
         fileName !== 'Dictionaries' &&
-        fileName !== 'Unknown Notes',
+        fileName !== 'Unknown Notes' &&
+        fileName !== 'Standard Notes',
     )
 
   if (legacyFiles.length) {
