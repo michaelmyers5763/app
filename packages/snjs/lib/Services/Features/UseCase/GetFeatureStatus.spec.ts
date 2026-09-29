@@ -51,7 +51,7 @@ describe('GetFeatureStatusUseCase', () => {
       ).toEqual(FeatureStatus.Entitled)
     })
 
-    it('should return NoUserSubscription for deprecated paid features if no subscription is active', () => {
+    it('should return entitled for deprecated paid features even if no subscription is active', () => {
       findNativeFeature.mockReturnValue({ deprecated: true })
 
       expect(
@@ -61,7 +61,7 @@ describe('GetFeatureStatusUseCase', () => {
           firstPartyOnlineSubscription: undefined,
           firstPartyRoles: undefined,
         }),
-      ).toEqual(FeatureStatus.NoUserSubscription)
+      ).toEqual(FeatureStatus.Entitled)
     })
   })
 
@@ -80,7 +80,7 @@ describe('GetFeatureStatusUseCase', () => {
       ).toEqual(FeatureStatus.Entitled)
     })
 
-    it('should return NoUserSubscription if the context item does not belong to a shared vault and user does not have subscription', () => {
+    it('should return Entitled if the context item does not belong to a shared vault and user does not have subscription', () => {
       findNativeFeature.mockReturnValue({ deprecated: false })
 
       expect(
@@ -91,10 +91,10 @@ describe('GetFeatureStatusUseCase', () => {
           hasPaidAnyPartyOnlineOrOfflineSubscription: false,
           inContextOfItem: { shared_vault_uuid: undefined } as jest.Mocked<DecryptedItemInterface>,
         }),
-      ).toEqual(FeatureStatus.NoUserSubscription)
+      ).toEqual(FeatureStatus.Entitled)
     })
 
-    it('should return NoUserSubscription for native features without subscription and roles', () => {
+    it('should return Entitled for native features without subscription and roles', () => {
       findNativeFeature.mockReturnValue({ deprecated: false })
 
       expect(
@@ -104,10 +104,10 @@ describe('GetFeatureStatusUseCase', () => {
           firstPartyRoles: undefined,
           hasPaidAnyPartyOnlineOrOfflineSubscription: false,
         }),
-      ).toEqual(FeatureStatus.NoUserSubscription)
+      ).toEqual(FeatureStatus.Entitled)
     })
 
-    it('should return NotInCurrentPlan for native features with roles not in available roles', () => {
+    it('should return Entitled for native features with roles not in available roles', () => {
       findNativeFeature.mockReturnValue({
         deprecated: false,
         availableInRoles: ['notInRole'],
@@ -120,7 +120,7 @@ describe('GetFeatureStatusUseCase', () => {
           firstPartyRoles: { online: ['inRole'] },
           hasPaidAnyPartyOnlineOrOfflineSubscription: false,
         }),
-      ).toEqual(FeatureStatus.NotInCurrentPlan)
+      ).toEqual(FeatureStatus.Entitled)
     })
 
     it('should return Entitled for native features with roles in available roles and active subscription', () => {
@@ -141,7 +141,7 @@ describe('GetFeatureStatusUseCase', () => {
       ).toEqual(FeatureStatus.Entitled)
     })
 
-    it('should return InCurrentPlanButExpired for native features with roles in available roles and expired subscription', () => {
+    it('should return Entitled for native features with roles in available roles and expired subscription', () => {
       findNativeFeature.mockReturnValue({
         deprecated: false,
         availableInRoles: ['inRole'],
@@ -156,7 +156,7 @@ describe('GetFeatureStatusUseCase', () => {
           firstPartyRoles: { online: ['inRole'] },
           hasPaidAnyPartyOnlineOrOfflineSubscription: false,
         }),
-      ).toEqual(FeatureStatus.InCurrentPlanButExpired)
+      ).toEqual(FeatureStatus.Entitled)
     })
   })
   describe('third party features', () => {
@@ -178,7 +178,7 @@ describe('GetFeatureStatusUseCase', () => {
       ).toEqual(FeatureStatus.Entitled)
     })
 
-    it('should return NoUserSubscription for non-existing third-party features', () => {
+    it('should return Entitled for non-existing third-party features', () => {
       ;(items.getDisplayableComponents as jest.Mock).mockReturnValue([])
 
       expect(
@@ -188,10 +188,10 @@ describe('GetFeatureStatusUseCase', () => {
           firstPartyOnlineSubscription: undefined,
           firstPartyRoles: undefined,
         }),
-      ).toEqual(FeatureStatus.NoUserSubscription)
+      ).toEqual(FeatureStatus.Entitled)
     })
 
-    it('should return InCurrentPlanButExpired for expired third-party features', () => {
+    it('should return Entitled for expired third-party features', () => {
       const mockComponent = {
         uuid: '00000000-0000-0000-0000-000000000000',
         isExpired: true,
@@ -206,7 +206,7 @@ describe('GetFeatureStatusUseCase', () => {
           firstPartyOnlineSubscription: undefined,
           firstPartyRoles: undefined,
         }),
-      ).toEqual(FeatureStatus.InCurrentPlanButExpired)
+      ).toEqual(FeatureStatus.Entitled)
     })
   })
 })
