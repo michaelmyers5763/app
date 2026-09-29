@@ -102,7 +102,7 @@
     ],
     "protocols": [
       {
-        "name": "Standard Notes",
+        "name": "Unknown Notes",
         "schemes": [
           "standardnotes"
         ]
@@ -114,7 +114,7 @@
       "entitlements": "./build/entitlements.mac.inherit.plist",
       "entitlementsInherit": "./build/entitlements.mac.inherit.plist",
       "extendInfo": {
-        "NSCameraUsageDescription": "Standard Notes requires access to your camera to enable the Moments feature."
+        "NSCameraUsageDescription": "Unknown Notes requires access to your camera to enable the Moments feature."
       },
       "asarUnpack": [
         "node_modules/keytar",

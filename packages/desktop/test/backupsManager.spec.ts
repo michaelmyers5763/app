@@ -6,7 +6,7 @@ import { createDriver, Driver } from './driver'
 
 const test = anyTest as TestFn<Driver>
 
-const BackupsDirectoryName = 'Standard Notes Backups'
+const BackupsDirectoryName = 'Unknown Notes Backups'
 
 test.beforeEach(async (t) => {
   t.context = await createDriver()

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Standard Notes Clipper",
-  "description": "Web clipper for Standard Notes",
+  "name": "Unknown Notes Clipper",
+  "description": "Web clipper for Unknown Notes",
   "permissions": ["activeTab", "storage"],
   "action": {
     "default_popup": "popup.html?route=extension"
