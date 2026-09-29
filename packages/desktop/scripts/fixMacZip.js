@@ -32,13 +32,13 @@ async function getBlockMapInfo(fileName) {
 ;(async () => {
   try {
     const version = process.argv.slice(2)[0]
-    const zipName = `standard-notes-${version}-mac-x64.zip`
+    const zipName = `unknown-notes-${version}-mac-x64.zip`
     const zipPath = `dist/${zipName}`
     console.log(`Removing ${zipPath}`)
     await fs.promises.unlink(zipPath)
 
     process.chdir('dist/mac')
-    const appName = process.argv.includes('--beta') ? 'Standard\\ Notes\\ \\(Beta\\).app' : 'Standard\\ Notes.app'
+    const appName = process.argv.includes('--beta') ? 'Unknown\\ Notes\\ \\(Beta\\).app' : 'Unknown\\ Notes.app'
 
     /** @see https://superuser.com/questions/574032/what-is-the-equivalent-unix-command-to-a-mac-osx-compress-menu-action */
     await exec(`ditto -c -k --sequesterRsrc --keepParent ${appName} ../${zipName}`)

@@ -327,17 +327,17 @@ describe('FeaturesService', () => {
         featureService.getFeatureStatus(
           NativeFeatureIdentifier.create(NativeFeatureIdentifier.TYPES.MidnightTheme).getValue(),
         ),
-      ).toBe(FeatureStatus.NoUserSubscription)
+      ).toBe(FeatureStatus.Entitled)
       expect(
         featureService.getFeatureStatus(
           NativeFeatureIdentifier.create(NativeFeatureIdentifier.TYPES.DeprecatedPlusEditor).getValue(),
         ),
-      ).toBe(FeatureStatus.NoUserSubscription)
+      ).toBe(FeatureStatus.Entitled)
       expect(
         featureService.getFeatureStatus(
           NativeFeatureIdentifier.create(NativeFeatureIdentifier.TYPES.SheetsEditor).getValue(),
         ),
-      ).toBe(FeatureStatus.NoUserSubscription)
+      ).toBe(FeatureStatus.Entitled)
     })
 
     it('role-based features while not signed into first party server', async () => {
@@ -349,7 +349,7 @@ describe('FeaturesService', () => {
         featureService.getFeatureStatus(
           NativeFeatureIdentifier.create(NativeFeatureIdentifier.TYPES.SuperEditor).getValue(),
         ),
-      ).toBe(FeatureStatus.NoUserSubscription)
+      ).toBe(FeatureStatus.Entitled)
     })
 
     it('third party feature status', async () => {
@@ -366,10 +366,10 @@ describe('FeaturesService', () => {
         FeatureStatus.Entitled,
       )
       expect(featureService.getFeatureStatus(Uuid.create('00000000-0000-0000-0000-000000000002').getValue())).toBe(
-        FeatureStatus.InCurrentPlanButExpired,
+        FeatureStatus.Entitled,
       )
       expect(featureService.getFeatureStatus(Uuid.create('00000000-0000-0000-0000-000000000003').getValue())).toBe(
-        FeatureStatus.NoUserSubscription,
+        FeatureStatus.Entitled,
       )
     })
 
@@ -382,12 +382,12 @@ describe('FeaturesService', () => {
         featureService.getFeatureStatus(
           NativeFeatureIdentifier.create(NativeFeatureIdentifier.TYPES.MidnightTheme).getValue(),
         ),
-      ).toBe(FeatureStatus.NoUserSubscription)
+      ).toBe(FeatureStatus.Entitled)
       expect(
         featureService.getFeatureStatus(
           NativeFeatureIdentifier.create(NativeFeatureIdentifier.TYPES.TokenVaultEditor).getValue(),
         ),
-      ).toBe(FeatureStatus.NoUserSubscription)
+      ).toBe(FeatureStatus.Entitled)
     })
 
     it('feature status for offline subscription', async () => {
@@ -414,7 +414,7 @@ describe('FeaturesService', () => {
         featureService.getFeatureStatus(
           NativeFeatureIdentifier.create(NativeFeatureIdentifier.TYPES.DeprecatedFileSafe).getValue(),
         ),
-      ).toBe(FeatureStatus.NoUserSubscription)
+      ).toBe(FeatureStatus.Entitled)
     })
 
     it('feature status for deprecated feature with subscription', async () => {

@@ -92,7 +92,7 @@ export function StringUploadFileProgress(fileName: string, percentComplete: numb
 
 export function StringUpgradeForFeature(featureNameBold: unknown) {
   return c('B7.FilesSubscriptionHelp.Subscription.Info')
-    .jt`To take advantage of ${featureNameBold} and other advanced features, upgrade your current plan.`
+    .jt`${featureNameBold} and all other features are fully unlocked and available for use.`
 }
 
 export function StringEmptyTrash(count: number): string {

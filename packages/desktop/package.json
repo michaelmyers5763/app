@@ -4,7 +4,7 @@
   "main": "./app/dist/index.js",
   "version": "3.45.1",
   "license": "AGPL-3.0",
-  "author": "Standard Notes.",
+  "author": "Unknown Notes.",
   "private": true,
   "repository": {
     "type": "git",
@@ -91,7 +91,7 @@
   "build": {
     "productName": "Unknown Notes",
     "appId": "org.standardnotes.standardnotes",
-    "artifactName": "standard-notes-${version}-${os}-${arch}.${ext}",
+    "artifactName": "unknown-notes-${version}-${os}-${arch}.${ext}",
     "afterSign": "scripts/notarizeMac.js",
     "files": [
       "compiled/**/*",
@@ -126,10 +126,7 @@
       ]
     },
     "win": {
-      "certificateSubjectName": "Standard Notes Ltd.",
-      "publisherName": "Standard Notes Ltd.",
-      "signDlls": true,
-      "sign": "./scripts/windowsSign.js"
+      "publisherName": "Unknown Notes"
     },
     "nsis": {
       "oneClick": false,
@@ -139,9 +136,9 @@
     "linux": {
       "category": "Office",
       "icon": "build/icon/",
-      "executableName": "standard-notes",
+      "executableName": "unknown-notes",
       "desktop": {
-        "StartupWMClass": "standard notes"
+        "StartupWMClass": "unknown notes"
       },
       "target": [
         "AppImage",

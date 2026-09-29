@@ -36,6 +36,31 @@ if (userDataPathIndex > 0) {
   }
 } else if (isSnap) {
   migrateSnapStorage()
+} else {
+  migrateLegacyUserData()
+}
+
+/**
+ * Safely copies legacy user data from 'Standard Notes' to 'Unknown Notes'
+ * if 'Unknown Notes' directory is empty or new.
+ */
+function migrateLegacyUserData() {
+  try {
+    const currentUserData = app.getPath('userData')
+    const appDataParent = path.dirname(currentUserData)
+    const legacyUserData = path.join(appDataParent, 'Standard Notes')
+
+    if (fs.existsSync(legacyUserData) && legacyUserData !== currentUserData) {
+      const currentFiles = fs.existsSync(currentUserData) ? fs.readdirSync(currentUserData) : []
+      if (currentFiles.length === 0) {
+        console.log(`Migrating legacy user data from ${legacyUserData} to ${currentUserData}...`)
+        fs.copySync(legacyUserData, currentUserData, { overwrite: false })
+        console.log('Legacy user data migration completed successfully.')
+      }
+    }
+  } catch (error) {
+    console.error('Error during legacy user data migration:', error)
+  }
 }
 
 log.transports.file.level = 'info'
