@@ -24,13 +24,9 @@ import {
   classNames,
 } from '@standardnotes/snjs'
 import { addToast, ToastType } from '@standardnotes/toast'
-import { StringUpgradeForFeature } from '@/Constants/Strings'
-import { ClipperName, jtString } from '@standardnotes/features'
 import { c } from 'ttag'
 import { getSuperJSONFromClipPayload } from './getSuperJSONFromClipHTML'
 import ClippedNoteView from './ClippedNoteView'
-import { PremiumFeatureIconClass, PremiumFeatureIconName } from '../Icon/PremiumFeatureIcon'
-import Button from '../Button/Button'
 
 import { useStateRef } from '@/Hooks/useStateRef'
 import usePreference from '@/Hooks/usePreference'
@@ -79,7 +75,6 @@ const ClipperView = ({ applicationGroup }: { applicationGroup: WebApplicationGro
   }, [application.sessions])
   const [isEntitledToExtension, setIsEntitled] = useState(true)
   const isEntitledRef = useStateRef(isEntitledToExtension)
-  const hasSubscription = application.hasValidFirstPartySubscription()
   useEffect(() => {
     return application.addEventObserver(async (event) => {
       switch (event) {
@@ -315,37 +310,6 @@ const ClipperView = ({ applicationGroup }: { applicationGroup: WebApplicationGro
     defaultTagRef,
     isEntitledRef,
   ])
-
-  const upgradePlan = useCallback(async () => {
-    if (hasSubscription) {
-      await application.openSubscriptionDashboard.execute()
-    } else {
-      await application.openPurchaseFlow()
-    }
-    window.close()
-  }, [application, hasSubscription])
-
-  if (user && !isEntitledToExtension) {
-    return (
-      <div className="px-3 py-3">
-        <div
-          className="mx-auto mb-5 flex h-24 w-24 items-center justify-center rounded-[50%] bg-contrast"
-          aria-hidden={true}
-        >
-          <Icon className={`h-12 w-12 ${PremiumFeatureIconClass}`} size={'custom'} type={PremiumFeatureIconName} />
-        </div>
-        <div className="mb-1 text-center text-lg font-bold">{c('B7.FilesSubscriptionHelp.Subscription.Title')
-          .t`Features Available`}</div>
-        <div className="mb-3 text-center">{jtString(StringUpgradeForFeature(ClipperName))}</div>
-        <Button className="mb-2" fullWidth primary onClick={upgradePlan}>
-          {c('B7.FilesSubscriptionHelp.Subscription.Action').t`Upgrade`}
-        </Button>
-        <Button fullWidth onClick={showSignOutConfirmation}>
-          {c('B1.Account.Session.Action').t`Sign out`}
-        </Button>
-      </div>
-    )
-  }
 
   if (clippedNote) {
     return (

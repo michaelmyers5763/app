@@ -126,9 +126,7 @@
       ]
     },
     "win": {
-      "publisherName": "Unknown Notes",
-      "signDlls": true,
-      "sign": "./scripts/windowsSign.js"
+      "publisherName": "Unknown Notes"
     },
     "nsis": {
       "oneClick": false,
