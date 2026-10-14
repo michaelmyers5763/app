@@ -130,7 +130,6 @@ const NotesOptions = ({ notes, closeMenu }: NotesOptionsProps) => {
     return <ProtectedUnauthorizedLabel />
   }
 
-  const areSomeNotesInSharedVault = notes.some((note) => application.vaults.getItemVault(note)?.isSharedVaultListing())
   const areSomeNotesInReadonlySharedVault = notes.some((note) => {
     const vault = application.vaults.getItemVault(note)
     return vault?.isSharedVaultListing() && application.vaultUsers.isCurrentUserReadonlyVaultMember(vault)
