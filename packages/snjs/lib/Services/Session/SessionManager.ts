@@ -146,7 +146,7 @@ export class SessionManager
     if (this.user) {
       return this.user.email
     } else {
-      return this.workspaceIdentifier
+      return this.workspaceIdentifier === 'standardnotes' ? 'unknownnotes' : this.workspaceIdentifier
     }
   }
 

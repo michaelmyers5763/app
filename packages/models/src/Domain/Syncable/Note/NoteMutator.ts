@@ -44,10 +44,6 @@ export class NoteMutator extends DecryptedItemMutator<NoteContent> {
     this.mutableContent.editorIdentifier = identifier
   }
 
-  set authorizedForListed(authorizedForListed: boolean) {
-    this.mutableContent.authorizedForListed = authorizedForListed
-  }
-
   toggleSpellcheck(): void {
     if (this.mutableContent.spellcheck == undefined) {
       this.mutableContent.spellcheck = false

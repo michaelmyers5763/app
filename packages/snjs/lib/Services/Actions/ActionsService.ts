@@ -91,8 +91,7 @@ export class ActionsService extends AbstractService {
 
   public getExtensions(): SNActionsExtension[] {
     const extensionItems = this.itemManager.getItems<SNActionsExtension>(ContentType.TYPES.ActionsExtension)
-    const excludingListed = extensionItems.filter((extension) => !extension.isListedExtension)
-    return excludingListed
+    return extensionItems
   }
 
   public extensionsInContextOfItem(item: DecryptedItemInterface) {

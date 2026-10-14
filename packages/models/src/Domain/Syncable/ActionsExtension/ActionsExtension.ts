@@ -52,10 +52,6 @@ export class SNActionsExtension extends DecryptedItem<ActionExtensionContent> {
     return this.package_info as ThirdPartyFeatureDescription
   }
 
-  public get isListedExtension(): boolean {
-    return (this.package_info.identifier as string) === 'org.standardnotes.listed'
-  }
-
   actionsWithContextForItem(item: DecryptedItemInterface): Action[] {
     return this.actions.filter((action) => {
       return action.context === item.content_type || action.context === 'Item'

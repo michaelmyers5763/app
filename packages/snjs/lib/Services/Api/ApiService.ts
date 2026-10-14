@@ -14,7 +14,6 @@ import {
   API_MESSAGE_FAILED_ACCESS_PURCHASE,
   API_MESSAGE_FAILED_CREATE_FILE_TOKEN,
   API_MESSAGE_FAILED_GET_SETTINGS,
-  API_MESSAGE_FAILED_LISTED_REGISTRATION,
   API_MESSAGE_FAILED_OFFLINE_ACTIVATION,
   API_MESSAGE_FAILED_OFFLINE_FEATURES,
   API_MESSAGE_FAILED_UPDATE_SETTINGS,
@@ -45,7 +44,6 @@ import {
   DeleteSettingResponse,
   PostSubscriptionTokensResponse,
   GetOfflineFeaturesResponse,
-  ListedRegistrationResponse,
   CreateValetTokenResponse,
   StartUploadSessionResponse,
   UploadFileChunkResponse,
@@ -709,18 +707,6 @@ export class LegacyApiService
     } catch {
       return new ClientDisplayableError(API_MESSAGE_FAILED_OFFLINE_ACTIVATION)
     }
-  }
-
-  public async registerForListedAccount(): Promise<HttpResponse<ListedRegistrationResponse>> {
-    if (!this.user) {
-      throw Error('Cannot register for Listed without user account.')
-    }
-    return this.tokenRefreshableRequest<ListedRegistrationResponse>({
-      verb: HttpVerb.Post,
-      url: joinPaths(this.host, Paths.v1.listedRegistration(this.user.uuid)),
-      fallbackErrorMessage: API_MESSAGE_FAILED_LISTED_REGISTRATION,
-      authentication: this.getSessionAccessToken(),
-    })
   }
 
   public async createUserFileValetToken(

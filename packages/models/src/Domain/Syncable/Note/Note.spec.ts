@@ -34,4 +34,16 @@ describe('SNNote Tests', () => {
 
     expect(note.noteType).toBe(undefined)
   })
+
+  it('should safely parse legacy payloads containing authorizedForListed without throwing', () => {
+    const legacyNote = createNote({
+      title: 'Legacy Note',
+      text: 'Content',
+      authorizedForListed: true,
+    } as never)
+
+    expect(legacyNote.title).toBe('Legacy Note')
+    expect(legacyNote.text).toBe('Content')
+    expect((legacyNote as unknown as Record<string, unknown>).authorizedForListed).toBeUndefined()
+  })
 })

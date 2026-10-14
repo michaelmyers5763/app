@@ -106,8 +106,6 @@ export type IconType =
   | 'link-off'
   | 'link'
   | 'list-bulleted'
-  | 'listed-filled'
-  | 'listed'
   | 'lock-filled'
   | 'lock'
   | 'markdown'
