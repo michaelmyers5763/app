@@ -6,7 +6,6 @@ import CreateAccount from './Panes/CreateAccount'
 import SignIn from './Panes/SignIn'
 import { SNLogoFull } from '@standardnotes/icons'
 import Icon from '../Icon/Icon'
-import { c } from 'ttag'
 
 type PaneSelectorProps = {
   currentPane: PurchaseFlowPane
@@ -42,24 +41,6 @@ const PurchaseFlowView: FunctionComponent<PurchaseFlowViewProps> = ({ applicatio
           </button>
           <SNLogoFull className="mb-5 h-7" />
           <PurchaseFlowPaneSelector currentPane={currentPane} application={application} />
-        </div>
-        <div className="flex justify-end px-4 md:px-0">
-          <a
-            className="mr-3 font-medium text-passive-1"
-            href="https://standardnotes.com/privacy"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {c('B7.FilesSubscriptionHelp.Subscription.Action').t`Privacy`}
-          </a>
-          <a
-            className="font-medium text-passive-1"
-            href="https://standardnotes.com/help"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {c('B7.FilesSubscriptionHelp.Subscription.Action').t`Help`}
-          </a>
         </div>
       </div>
     </div>

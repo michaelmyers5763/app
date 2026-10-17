@@ -25,12 +25,6 @@ Standard Notes is an end-to-end encrypted note-taking app for digitalists and pr
 	- [Android](https://play.google.com/store/apps/details?id=com.standardnotes)
 4. You're all set. Standard Notes comes out of the box with end-to-end encrypted sync on all your devices.
 
-### Publish a Blog
-
-Standard Notes is a dependable environment to do your most important work, including publishing your ideas to the world. Listed allows you to create an online publication with automatic email newsletters delivered to your readers, directly from Standard Notes.
-
-[Learn more about Listed.](https://listed.to/)
-
 ### Community
 
 Join us on

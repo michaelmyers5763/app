@@ -10,7 +10,6 @@ export class NativeFeatureIdentifier extends ValueObject<NativeFeatureIdentifier
     Files: 'org.standardnotes.files',
     FilesLowStorageTier: 'org.standardnotes.files-low-storage-tier',
     FilesMaximumStorageTier: 'org.standardnotes.files-max-storage-tier',
-    ListedCustomDomain: 'org.standardnotes.listed-custom-domain',
     NoteHistory30Days: 'org.standardnotes.note-history-30',
     NoteHistory365Days: 'org.standardnotes.note-history-365',
     NoteHistoryUnlimited: 'org.standardnotes.note-history-unlimited',

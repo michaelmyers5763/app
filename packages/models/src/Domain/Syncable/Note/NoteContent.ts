@@ -12,7 +12,6 @@ export interface NoteContentSpecialized {
   editorWidth?: EditorLineWidth
   noteType?: NoteType
   editorIdentifier?: string
-  authorizedForListed?: boolean
 }
 
 export type NoteContent = NoteContentSpecialized & ItemContent

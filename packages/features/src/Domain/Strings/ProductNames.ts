@@ -1,6 +1,5 @@
 export const AppName = 'Unknown Notes'
 
-export const ListedName = 'Listed'
 export const SuperName = 'Super'
 export const ClipperName = 'Web Clipper'
 export const FileSafeName = 'FileSafe'

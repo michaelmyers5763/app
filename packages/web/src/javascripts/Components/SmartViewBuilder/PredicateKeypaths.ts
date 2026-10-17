@@ -1,4 +1,3 @@
-import { ListedName, jtString } from '@standardnotes/features'
 import { c } from 'ttag'
 
 export type PredicateKeypath =
@@ -7,7 +6,6 @@ export type PredicateKeypath =
   | 'text'
   | 'text.length'
   | 'noteType'
-  | 'authorizedForListed'
   | 'editorIdentifier'
   | 'userModifiedDate'
   | 'serverUpdatedAt'
@@ -29,7 +27,6 @@ export const PredicateKeypathLabels: { [k in PredicateKeypath]: string } = {
   text: c('B4.Notes.TagsLinkedItems.Label').t`Text`,
   'text.length': c('B4.Notes.TagsLinkedItems.Label').t`Text Length`,
   noteType: c('B4.Notes.TagsLinkedItems.Action').t`Note Type`,
-  authorizedForListed: jtString(c('B4.Notes.TagsLinkedItems.Label').jt`Authorized For ${ListedName}`),
   editorIdentifier: c('B4.Notes.TagsLinkedItems.Label').t`Editor Identifier`,
   userModifiedDate: c('B4.Notes.TagsLinkedItems.Action').t`User Modified Date`,
   serverUpdatedAt: c('B4.Notes.TagsLinkedItems.Label').t`Server Updated At`,
@@ -54,7 +51,6 @@ export const PredicateKeypathTypes: {
   text: 'string',
   'text.length': 'number',
   noteType: 'noteType',
-  authorizedForListed: 'boolean',
   editorIdentifier: 'editorIdentifier',
   userModifiedDate: 'date',
   serverUpdatedAt: 'date',

@@ -6,7 +6,6 @@ export type PreferencePaneId =
   | 'vaults'
   | 'appearance'
   | 'backups'
-  | 'listed'
   | 'plugins'
   | 'shortcuts'
   | 'accessibility'
